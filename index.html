@@ -15,7 +15,7 @@
 html,body{width:100%;height:100%;overflow:hidden;background:#101a52;color:#fff;font-family:"Arial Rounded MT Bold","Trebuchet MS","Segoe UI",Arial,sans-serif;font-weight:900;overscroll-behavior:none;touch-action:manipulation}
 #cv{position:fixed;left:0;top:0;width:100%;height:100%;display:none;touch-action:none}
 #stage{position:fixed;left:0;top:0;transform-origin:0 0;pointer-events:none}
-.screen{position:absolute;inset:0;display:none;pointer-events:auto;flex-direction:column}
+.screen{position:absolute;inset:0;display:none;pointer-events:auto;flex-direction:column;overflow:hidden}
 .screen.on{display:flex}
 #s-game{pointer-events:none}
 .bg{background:radial-gradient(ellipse at 50% 35%,#3e72ff 0%,#2140b0 45%,#121d5e 100%)}
@@ -40,7 +40,7 @@ button{font:inherit;font-weight:900;color:#fff;cursor:pointer;border:none;backgr
 .mbtn span{font-size:30px}
 .badge{position:absolute;top:-9px;right:-9px;background:#ff3d3d;border:2px solid #fff;border-radius:13px;min-width:26px;height:26px;font-size:15px;display:flex;align-items:center;justify-content:center;padding:0 6px;text-shadow:none}
 .lhero{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer}
-.lhero img{width:290px;height:290px;filter:drop-shadow(0 14px 8px rgba(0,0,0,.45))}
+.lhero img{filter:drop-shadow(0 14px 8px rgba(0,0,0,.45))}
 .bob{animation:bob 2.4s ease-in-out infinite}
 @keyframes bob{50%{transform:translateY(-12px)}}
 .hname{font-size:46px;letter-spacing:1px}
@@ -83,6 +83,46 @@ button{font:inherit;font-weight:900;color:#fff;cursor:pointer;border:none;backgr
 .skin{width:110px;background:rgba(0,0,0,.4);border-radius:12px;padding:4px;text-align:center;font-size:13px;cursor:pointer;border:3px solid transparent}
 .skin img{width:80px;height:80px}
 .skin.on{border-color:#ffe45a}
+.rays{position:absolute;left:50%;top:48%;width:1700px;height:1700px;margin:-850px 0 0 -850px;background:repeating-conic-gradient(rgba(255,255,255,.07) 0 9deg,transparent 9deg 18deg);animation:spin 80s linear infinite;pointer-events:none;-webkit-mask-image:radial-gradient(circle,#000 0,transparent 55%);mask-image:radial-gradient(circle,#000 0,transparent 55%)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.sparkles{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.sparkles i{position:absolute;bottom:-20px;width:8px;height:8px;border-radius:50%;background:#fff;opacity:0;box-shadow:0 0 10px #9ecbff;animation:float 8s linear infinite}
+@keyframes float{0%{transform:translateY(0);opacity:0}15%{opacity:.8}100%{transform:translateY(-700px);opacity:0}}
+.prof{padding:4px 14px 4px 4px;text-align:left}
+.prof .av{width:46px;height:46px;border-radius:12px;background:linear-gradient(#5fa8ff,#2244aa);border:2px solid #fff6;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.prof .av img{width:58px;height:58px;margin-top:8px}
+.prof small{display:block;font-size:13px;opacity:.85}
+.xpb{display:block;width:110px;height:6px;background:rgba(0,0,0,.5);border-radius:4px;overflow:hidden;margin-top:2px}.xpb i{display:block;height:100%;background:#7dff6a}
+.chip.gold{background:linear-gradient(#ffcf3d,#c77700);border-color:#fff3}
+.mbtn .ico{width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:28px;background:linear-gradient(var(--a),var(--b));box-shadow:inset 0 -4px 0 rgba(0,0,0,.25),0 2px 0 #0006;flex:none}
+.mbtn{padding:6px 12px 6px 6px}
+.ribbon{background:linear-gradient(var(--rc),rgba(0,0,0,.45));padding:6px 46px;font-size:40px;clip-path:polygon(0 0,100% 0,94% 50%,100% 100%,0 100%,6% 50%);margin-bottom:-6px;position:relative;z-index:2}
+.podium{position:relative;width:330px;height:300px;display:flex;align-items:flex-end;justify-content:center}
+.podium:before{content:"";position:absolute;bottom:2px;left:30px;right:30px;height:74px;border-radius:50%;background:radial-gradient(ellipse,var(--rc) 0%,rgba(0,0,0,0) 70%);opacity:.85}
+.podium:after{content:"";position:absolute;bottom:14px;left:62px;right:62px;height:44px;border-radius:50%;border:4px solid var(--rc);box-shadow:0 0 22px var(--rc),inset 0 0 18px var(--rc);background:rgba(0,0,0,.25)}
+.podium img{position:relative;z-index:1;width:300px!important;height:300px!important}
+.rpill{background:var(--rc);border-radius:10px;padding:2px 10px;border:2px solid #fff5}
+.hcardL{width:320px;background:linear-gradient(160deg,rgba(255,255,255,.14),rgba(0,0,0,.4));border:3px solid var(--rc);border-radius:20px;padding:12px 14px;box-shadow:0 0 24px rgba(0,0,0,.35),inset 0 0 30px rgba(0,0,0,.25);font-weight:700}
+.hcardL.wide{width:auto;margin-bottom:10px}
+.hct{display:flex;justify-content:space-between;align-items:center;font-size:22px}
+.hct span{font-size:13px;opacity:.85}
+.bio{font-size:14px;line-height:1.35;opacity:.92;margin:6px 0 8px;font-weight:700}
+.sb{display:flex;align-items:center;gap:8px;font-size:14px;margin:5px 0}
+.sb span{width:86px;flex:none}.sb .bar{flex:1;height:12px}.sb b{width:96px;text-align:right;font-size:14px;flex:none}
+.pwrow{display:flex;gap:8px;margin:8px 0}
+.pwi{flex:1;background:rgba(0,0,0,.4);border-radius:12px;text-align:center;font-size:24px;padding:4px;filter:grayscale(1);opacity:.5}
+.pwi.on{filter:none;opacity:1;background:rgba(130,60,210,.55)}
+.pwi small{display:block;font-size:11px}
+.supl{font-size:13px;opacity:.9;line-height:1.3}.supl b{color:#ffe45a}
+.chev{font-size:40px;margin-left:auto;opacity:.8}
+.play{overflow:hidden}
+.play:after{content:"";position:absolute;top:0;left:-60%;width:35%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.65),transparent);transform:skewX(-20deg);animation:shine 2.8s infinite}
+@keyframes shine{0%{left:-60%}60%,100%{left:130%}}
+.rarh{display:flex;align-items:center;gap:12px;font-size:26px;margin:14px 0 8px;color:var(--rc)}
+.rarh small{font-size:16px;color:#fff;background:rgba(0,0,0,.4);border-radius:10px;padding:2px 10px}
+.rarh:after{content:"";flex:1;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--rc),transparent)}
+.hcard{background:linear-gradient(170deg,var(--rc) 0%,#1b2366 75%)!important;border-color:var(--rc)!important}
+.hcard img{filter:drop-shadow(0 6px 4px rgba(0,0,0,.4))}
 .pows{display:flex;flex-direction:column;gap:8px}
 .pow{display:flex;gap:12px;align-items:center;background:rgba(0,0,0,.35);border-radius:12px;padding:8px 12px;font-size:15px;font-weight:700}
 .pow.on{background:rgba(130,60,210,.5)}
@@ -247,6 +287,61 @@ const HEROES=[
  atk:{kind:'shot',n:1,speed:650,range:320,dmg:760,r:22,col:'#ffd27a',pierce:1},
  sup:{kind:'slam',range:480,dmg:1500,aoe:170,wallBreak:1}}
 ];
+HEROES.push(
+{id:'kiwi',name:'Kiwi',rar:0,role:'Tireur',color:'#8bc34a',hp:3400,spd:220,reload:1.2,ad:'Tire deux cailloux avec son lance-pierre.',sd:'Une volée de 5 gros cailloux qui repoussent.',an:'Lance-pierre',sn:'Grêle de cailloux',
+ atk:{kind:'shot',n:1,burst:2,bd:.12,spread:.06,speed:900,range:520,dmg:440,r:8,col:'#bcaaa4'},sup:{kind:'shot',n:5,spread:.45,speed:900,range:560,dmg:460,r:11,col:'#8d6e63',knock:160}},
+{id:'grizzly',name:'Grizzly',rar:1,role:'Tank',color:'#795548',hp:6600,spd:220,reload:1,ad:'Gros coup de griffes de près.',sd:"Fonce comme un ours en colère et renverse tout.",an:'Coup de griffe',sn:"Charge de l'ours",
+ atk:{kind:'shot',n:3,spread:.7,speed:700,range:220,dmg:540,r:12,col:'#ffffff',pierce:1},sup:{kind:'dash',dist:380,speed:1150,dmg:1100,knock:260,wallBreak:1}},
+{id:'sakura',name:'Sakura',rar:1,role:'Assassin',color:'#f48fb1',hp:3900,spd:255,reload:1,ad:'Lance deux éventails tranchants.',sd:'Une tempête de pétales tout autour d\'elle.',an:'Éventails',sn:'Tempête de pétales',
+ atk:{kind:'shot',n:2,spread:.3,speed:950,range:260,dmg:620,r:8,col:'#ffc1e3'},sup:{kind:'ring',n:12,speed:600,range:280,dmg:420,r:12,col:'#ff80ab',pierce:1}},
+{id:'max',name:'Max',rar:2,role:'Tireur',color:'#29b6f6',hp:3300,spd:235,reload:1.2,ad:'Une rafale de 3 tirs laser à longue portée.',sd:'Un méga laser qui traverse tout et casse les murs.',an:'Rafale laser',sn:'Méga laser',
+ atk:{kind:'shot',n:1,burst:3,bd:.08,spread:.06,speed:1000,range:600,dmg:260,r:6,col:'#80d8ff'},sup:{kind:'shot',n:1,speed:1400,range:750,dmg:1300,r:14,col:'#00e5ff',pierce:1,wallBreak:1}},
+{id:'coco',name:'Coco',rar:2,role:'Artilleur',color:'#a1887f',hp:3100,spd:210,reload:1.5,ad:'Lance une noix de coco qui explose par-dessus les murs.',sd:'Une noix de coco géante qui détruit les murs.',an:'Noix de coco',sn:'Coco géante',
+ atk:{kind:'lob',speed:620,range:470,dmg:950,aoe:90,r:11,col:'#6d4c41'},sup:{kind:'lob',speed:560,range:500,dmg:1500,aoe:190,r:18,col:'#4e342e',wallBreak:1}},
+{id:'tempete',name:'Tempête',rar:3,role:'Mage',color:'#5c6bc0',hp:3400,spd:215,reload:1.4,ad:'Un éclair magique qui traverse les ennemis.',sd:'Un cyclone tout autour de lui qui ralentit.',an:'Éclair magique',sn:'Cyclone',
+ atk:{kind:'shot',n:1,speed:850,range:560,dmg:640,r:11,col:'#b388ff',pierce:1},sup:{kind:'ring',n:16,speed:700,range:420,dmg:380,r:12,col:'#7c4dff',pierce:1,slow:1.2}},
+{id:'rex',name:'Rex',rar:3,role:'Tank',color:'#43a047',hp:7200,spd:215,reload:1.2,ad:'Un rugissement qui traverse les ennemis.',sd:'Saute et écrase le sol comme un T-Rex.',an:'Rugissement',sn:'Saut du T-Rex',
+ atk:{kind:'shot',n:1,speed:650,range:300,dmg:820,r:20,col:'#c5e1a5',pierce:1},sup:{kind:'slam',range:450,dmg:1400,aoe:160,wallBreak:1}},
+{id:'luna',name:'Luna',rar:3,role:'Soutien',color:'#9575cd',hp:3500,spd:215,reload:1.3,ad:'Lance une étoile filante par-dessus les murs.',sd:'Une zone de lumière qui soigne toute l\'équipe.',an:'Étoile filante',sn:'Clair de lune',
+ atk:{kind:'lob',speed:650,range:480,dmg:800,aoe:80,r:10,col:'#e1bee7'},sup:{kind:'heal',range:450,rad:180,heal:700,dur:4}},
+{id:'vortex',name:'Vortex',rar:4,role:'Contrôle',color:'#26c6da',hp:3800,spd:220,reload:1.3,ad:'3 tourbillons qui repoussent un peu.',sd:'Un trou noir qui repousse tout le monde.',an:'Tourbillon',sn:'Trou noir',
+ atk:{kind:'shot',n:3,spread:.35,speed:800,range:470,dmg:360,r:9,col:'#84ffff',knock:60},sup:{kind:'ring',n:20,speed:650,range:380,dmg:400,r:12,col:'#00e5ff',knock:200,pierce:1}},
+{id:'spectre',name:'Spectre',rar:4,role:'Assassin',color:'#78909c',hp:3700,spd:260,reload:1,ad:'Un coup de faux qui traverse les ennemis.',sd:'Traverse le terrain comme un fantôme.',an:'Faux spectrale',sn:'Traversée',
+ atk:{kind:'shot',n:1,speed:900,range:300,dmg:1050,r:14,col:'#cfd8dc',pierce:1},sup:{kind:'dash',dist:480,speed:1500,dmg:1200,knock:60}},
+{id:'magma',name:'Magma',rar:4,role:'Artilleur',color:'#ff5722',hp:3600,spd:210,reload:1.5,ad:'Lance une boule de lave par-dessus les murs.',sd:'Une éruption de lave tout autour de lui.',an:'Boule de lave',sn:'Éruption',
+ atk:{kind:'lob',speed:620,range:480,dmg:1050,aoe:100,r:11,col:'#ff3d00'},sup:{kind:'ring',n:16,speed:520,range:360,dmg:480,r:14,col:'#ff6d00',pierce:1}},
+{id:'zeus',name:'Zeus',rar:5,role:'Tireur',color:'#ffd54f',hp:3600,spd:215,reload:1.6,ad:'Un éclair très longue portée qui traverse tout.',sd:"Tombe du ciel : dégâts de zone et ennemis paralysés.",an:'Foudre',sn:'Colère du ciel',
+ atk:{kind:'shot',n:1,speed:1600,range:720,dmg:1000,r:8,col:'#fff59d',pierce:1},sup:{kind:'slam',range:520,dmg:1600,aoe:180,wallBreak:1,stun:1.2}},
+{id:'dragona',name:'Dragona',rar:5,role:'Dégâts',color:'#e53935',hp:4800,spd:215,reload:1,ad:'Souffle du feu qui traverse les ennemis.',sd:'Un énorme cercle de flammes autour d\'elle.',an:'Souffle de feu',sn:'Ailes de flamme',
+ atk:{kind:'shot',n:5,spread:.45,speed:650,range:320,dmg:200,r:11,col:'#ff6d00',pierce:1,flame:1},sup:{kind:'ring',n:24,speed:560,range:420,dmg:520,r:15,col:'#ff1744',pierce:1}},
+{id:'chrono',name:'Chrono',rar:5,role:'Contrôle',color:'#ffb300',hp:3400,spd:220,reload:1.3,ad:'Deux aiguilles qui ralentissent les ennemis.',sd:'Arrête le temps : les ennemis sont figés.',an:'Aiguilles du temps',sn:'Arrêt du temps',
+ atk:{kind:'shot',n:1,burst:2,bd:.1,speed:900,range:560,dmg:480,r:9,col:'#ffe082',slow:1},sup:{kind:'lob',speed:750,range:520,dmg:900,aoe:200,r:16,col:'#ffca28',stun:2.2}});
+const BIOS={
+ riko:"Le cow-boy le plus rapide de l'arène. Il ne rate jamais une occasion de faire le malin.",
+ bruna:"Une rockeuse au grand cœur qui adore le bruit… surtout celui de son fusil à pompe.",
+ rocco:"Ouvrier de chantier costaud. Il casse des murs avant le petit-déjeuner.",
+ mila:"Une petite fée des fleurs qui soigne ses amis et fait pousser des jardins partout.",
+ boum:"Inventeur un peu fou. Pour lui, tout est mieux avec une explosion.",
+ lynx:"Chasseuse silencieuse qui vise au millimètre depuis l'autre bout de la carte.",
+ pyro:"Il adore les feux d'artifice. Un peu trop, peut-être…",
+ gelo:"Venu du pôle Nord, il transforme tout en glaçons… même ses ennemis.",
+ turbo:"Ninja ultra-rapide. Tu ne le vois pas arriver, tu le vois repartir.",
+ nova:"Ingénieure de l'espace qui construit des tourelles plus vite que son ombre.",
+ titan:"Un géant viking avec un marteau aussi gros qu'une voiture.",
+ kiwi:"Le plus jeune de la bande. Son lance-pierre ne le quitte jamais.",
+ grizzly:"Un gros ours… qui n'aime pas du tout les câlins.",
+ sakura:"Danseuse aux éventails tranchants, gracieuse comme une fleur de cerisier.",
+ max:"Gamer pro et champion de vitesse. Son laser fait des étincelles.",
+ coco:"Il vient d'une île tropicale et lance des noix de coco explosives.",
+ tempete:"Vieux sorcier des nuages qui contrôle le vent et les tempêtes.",
+ rex:"Un enfant en costume de dinosaure… ou un vrai dinosaure ? Personne ne sait.",
+ luna:"Gardienne de la lune qui soigne son équipe avec la lumière des étoiles.",
+ vortex:"Scientifique qui a créé un mini trou noir dans son laboratoire.",
+ spectre:"Un fantôme mystérieux qui traverse ses ennemis avec sa faux.",
+ magma:"Né dans un volcan, il lance des boules de lave brûlante.",
+ zeus:"Le roi du ciel en personne. Ses éclairs foudroient tout sur leur passage.",
+ dragona:"Princesse dragon qui crache du feu et vole avec des ailes de flammes.",
+ chrono:"Maître du temps : il peut figer ses ennemis pendant quelques secondes."};
 const HERO={};HEROES.forEach(h=>{HERO[h.id]=h;const a=h.atk;h.need=a.dmg*(a.n||1)*(a.burst||1)*3.2});
 // Apparence des personnages : peau, haut, bas, cheveux, chapeau, accessoires, arme
 const LOOKS={
@@ -261,6 +356,21 @@ const LOOKS={
  turbo:{skin:'#e0ac7e',top:'#263238',pants:'#263238',hair:'short',hairCol:'#111',hat:'ninja',hatCol:'#26a69a',acc:[],accCol:'#26a69a',weapon:'blades'},
  nova:{skin:'#f5d0b0',top:'#e0e0e0',pants:'#9e9e9e',hair:'bob',hairCol:'#7c4dff',hat:'spacehelmet',hatCol:'#9ccc65',acc:[],accCol:'#9ccc65',weapon:'blaster'},
  titan:{skin:'#b5835a',top:'#6d4c41',pants:'#3e2723',hair:'long',hairCol:'#ffb74d',hat:'viking',hatCol:'#9e9e9e',acc:['beard'],accCol:'#ffb74d',weapon:'hammer',big:1.12}};
+Object.assign(LOOKS,{
+ kiwi:{skin:'#ffe0bd',top:'#7cb342',pants:'#5d4037',hair:'short',hairCol:'#ff8f00',hat:'cap',hatCol:'#558b2f',acc:[],accCol:'#fff',weapon:'slingshot'},
+ grizzly:{skin:'#d7a86e',top:'#6d4c41',pants:'#3e2723',hair:'none',hairCol:'#000',hat:'bearhood',hatCol:'#795548',acc:['beard'],accCol:'#4e342e',weapon:'claws',big:1.12},
+ sakura:{skin:'#ffe0c4',top:'#f48fb1',pants:'#ad1457',hair:'long',hairCol:'#212121',hat:'flower',hatCol:'#ff80ab',acc:[],accCol:'#fff',weapon:'blades',dress:1},
+ max:{skin:'#c68642',top:'#0288d1',pants:'#263238',hair:'spiky',hairCol:'#212121',hat:'headphones',hatCol:'#ff4081',acc:['visor'],accCol:'#00e5ff',weapon:'blaster'},
+ coco:{skin:'#a1665e',top:'#ffb74d',pants:'#1565c0',hair:'short',hairCol:'#3e2723',hat:'strawhat',hatCol:'#f9e79f',acc:['sunglasses'],accCol:'#fff',weapon:'bomb',wCol:'#6d4c41'},
+ tempete:{skin:'#f5d0b0',top:'#3949ab',pants:'#1a237e',hair:'long',hairCol:'#e0e0e0',hat:'witch',hatCol:'#283593',acc:['beard'],accCol:'#eeeeee',weapon:'wand',dress:1},
+ rex:{skin:'#9ccc65',top:'#43a047',pants:'#2e7d32',hair:'none',hairCol:'#000',hat:'dino',hatCol:'#388e3c',acc:[],accCol:'#fff',weapon:'claws',big:1.15},
+ luna:{skin:'#f3e5f5',top:'#7e57c2',pants:'#4527a0',hair:'bob',hairCol:'#e1f5fe',hat:'moon',hatCol:'#fff59d',acc:['wings'],accCol:'#fff',weapon:'wand',dress:1},
+ vortex:{skin:'#b2ebf2',top:'#00838f',pants:'#004d40',hair:'spiky',hairCol:'#18ffff',hat:'none',hatCol:'#000',acc:['goggles'],accCol:'#18ffff',weapon:'orb',wCol:'#18ffff'},
+ spectre:{skin:'#cfd8dc',top:'#37474f',pants:'#263238',hair:'none',hairCol:'#000',hat:'hood',hatCol:'#455a64',acc:['cape','mask'],accCol:'#263238',weapon:'scythe'},
+ magma:{skin:'#8d6e63',top:'#bf360c',pants:'#3e2723',hair:'flame',hairCol:'#ff3d00',hat:'none',hatCol:'#000',acc:['belt'],accCol:'#ffab00',weapon:'bomb',wCol:'#dd2c00'},
+ zeus:{skin:'#ffe0bd',top:'#fafafa',pants:'#fafafa',hair:'long',hairCol:'#fafafa',hat:'laurel',hatCol:'#ffd21f',acc:['cape','beard'],accCol:'#eeeeee',weapon:'lightning',dress:1},
+ dragona:{skin:'#ffccbc',top:'#c62828',pants:'#4a148c',hair:'long',hairCol:'#ff6d00',hat:'dragon',hatCol:'#b71c1c',acc:['wings'],accCol:'#fff',wingCol:'#d50000',weapon:'flamer'},
+ chrono:{skin:'#ffe0c4',top:'#6d4c41',pants:'#3e2723',hair:'short',hairCol:'#bdbdbd',hat:'tophat',hatCol:'#ff8f00',acc:['monocle','mustache'],accCol:'#bdbdbd',weapon:'orb',wCol:'#ffca28'}});
 const SKINS=[
 {id:'riko_pirate',hero:'riko',name:'Riko Pirate',gems:30,look:{top:'#222',pants:'#5d4037',hat:'tricorne',hatCol:'#222',acc:['eyepatch','beard'],accCol:'#3b2a1a'}},
 {id:'riko_cyber',hero:'riko',name:'Riko Cyber',gems:60,look:{top:'#00bcd4',pants:'#263238',hat:'cap',hatCol:'#00e5ff',hairCol:'#e040fb',acc:['visor'],accCol:'#00e5ff',weapon:'blaster'}},
@@ -282,10 +392,17 @@ const SKINS=[
 {id:'nova_sorciere',hero:'nova',name:'Nova Sorcière',gems:60,look:{top:'#4a148c',pants:'#4a148c',hat:'witch',hatCol:'#311b92',hairCol:'#00e676',dress:1,weapon:'wand'}},
 {id:'titan_lave',hero:'titan',name:'Titan Lave',pass:1,look:{skin:'#5d2e1f',top:'#d6361f',hairCol:'#ff6d00',accCol:'#ff6d00',hatCol:'#3e2723'}},
 {id:'titan_noel',hero:'titan',name:'Titan Père Noël',gems:80,look:{top:'#d32f2f',pants:'#d32f2f',hat:'santa',hatCol:'#d32f2f',acc:['beard','belt'],accCol:'#ffffff'}}];
+SKINS.push(
+{id:'kiwi_explo',hero:'kiwi',name:'Kiwi Explorateur',gems:30,look:{hat:'strawhat',hatCol:'#d7ccc8',top:'#a1887f',pants:'#6d4c41',acc:['scarf'],accCol:'#e53935'}},
+{id:'rex_rose',hero:'rex',name:'Rex Barbe-à-papa',gems:50,look:{skin:'#f8bbd0',top:'#ec407a',pants:'#ad1457',hatCol:'#f06292'}},
+{id:'spectre_halloween',hero:'spectre',name:'Spectre Halloween',gems:60,look:{hat:'pumpkin',top:'#ff6f00',accCol:'#4a148c'}},
+{id:'zeus_sombre',hero:'zeus',name:'Zeus Sombre',gems:80,look:{top:'#212121',pants:'#212121',hairCol:'#424242',accCol:'#7c4dff',hatCol:'#b0bec5'}},
+{id:'dragona_glace',hero:'dragona',name:'Dragona de Glace',gems:80,look:{top:'#0288d1',hatCol:'#01579b',hairCol:'#e1f5fe',wingCol:'#4fc3f7',weapon:'icestaff'}},
+{id:'max_or',hero:'max',name:'Max Champion',gems:50,look:{top:'#ffd21f',pants:'#212121',hatCol:'#ffd21f'}});
 const SKIN={};SKINS.forEach(s=>SKIN[s.id]=s);
 function lookOf(hid,skin){const b=LOOKS[hid];const s=skin&&SKIN[skin];return s?Object.assign({},b,s.look):b}
 // Gadgets, talents et surcharge
-const GAD_LVL=3,TAL_LVL=5,HYP_LVL=7;const GAD_COST=300,TAL_COST=700,HYP_COST=1500;
+let BOTPOW=0;const GAD_LVL=3,TAL_LVL=5,HYP_LVL=7;const GAD_COST=300,TAL_COST=700,HYP_COST=1500;
 const GADGETS={
  riko:{n:'Roulade',ic:'🌀',d:'Fait une roulade rapide pour esquiver.',k:'dash'},
  bruna:{n:'Recharge express',ic:'🔄',d:"Recharge toutes ses munitions d'un coup.",k:'reload'},
@@ -310,6 +427,36 @@ const TALENTS={
  turbo:{n:'Vampire',ic:'🧛',d:'Se soigne de 30 % des dégâts infligés.',m:{lifesteal:.3}},
  nova:{n:'Tourelle blindée',ic:'🔩',d:'Tourelles 40 % plus solides et plus fortes.',m:{turret:1.4}},
  titan:{n:'Cœur de pierre',ic:'❤️',d:'Se soigne 2 fois plus vite.',m:{regen:2}}};
+Object.assign(GADGETS,{
+ kiwi:{n:'Poche pleine',ic:'🎒',d:"Recharge toutes ses munitions d'un coup.",k:'reload'},
+ grizzly:{n:'Grognement',ic:'🐻',d:'Repousse et blesse les ennemis proches.',k:'roar'},
+ sakura:{n:'Pas de fleur',ic:'🌸',d:'Se téléporte un peu plus loin.',k:'blink'},
+ max:{n:'Turbo-baskets',ic:'👟',d:'Fait un sprint ultra-rapide.',k:'dash'},
+ coco:{n:'Coco piégée',ic:'🥥',d:'Pose une noix de coco qui explose après 1 s.',k:'mine'},
+ tempete:{n:'Brouillard',ic:'🌫️',d:'Ralentit tous les ennemis proches.',k:'slowaura'},
+ rex:{n:'Écailles',ic:'🦖',d:'Prend 50 % de dégâts en moins pendant 3 s.',k:'shield'},
+ luna:{n:'Rayon de lune',ic:'🌙',d:'Se soigne de 1 500 PV.',k:'heal'},
+ vortex:{n:'Aspiration',ic:'🌀',d:'Ralentit tous les ennemis proches.',k:'slowaura'},
+ spectre:{n:'Disparition',ic:'👻',d:'Devient invisible pendant 3 s.',k:'invis'},
+ magma:{n:'Geyser',ic:'🌋',d:'Projette de la lave tout autour de lui.',k:'burst'},
+ zeus:{n:'Tonnerre',ic:'⚡',d:'Repousse et blesse les ennemis proches.',k:'roar'},
+ dragona:{n:'Écailles de feu',ic:'🐉',d:'Lance des flammèches tout autour.',k:'burst'},
+ chrono:{n:'Saut temporel',ic:'⏳',d:'Se téléporte un peu plus loin.',k:'blink'}});
+Object.assign(TALENTS,{
+ kiwi:{n:'Gros cailloux',ic:'🪨',d:'+15 % de dégâts.',m:{dmg:1.15}},
+ grizzly:{n:'Fourrure épaisse',ic:'🧸',d:'Prend 15 % de dégâts en moins.',m:{armor:.85}},
+ sakura:{n:'Pétales vampires',ic:'🌺',d:'Se soigne de 25 % des dégâts infligés.',m:{lifesteal:.25}},
+ max:{n:'Surchauffe',ic:'🎮',d:'Recharge 25 % plus vite.',m:{reload:.75}},
+ coco:{n:'Grosse noix',ic:'🌴',d:'Explosions 30 % plus grandes.',m:{aoe:1.3}},
+ tempete:{n:'Vent glacial',ic:'🌬️',d:'Les ralentissements durent 2 fois plus longtemps.',m:{slowMul:2}},
+ rex:{n:'Sang-froid',ic:'🥩',d:'Se soigne 2 fois plus vite.',m:{regen:2}},
+ luna:{n:'Pleine lune',ic:'🌕',d:'Sa zone de soin soigne 50 % de plus.',m:{healZone:1.5}},
+ vortex:{n:'Grand tourbillon',ic:'🧲',d:'+15 % de portée.',m:{range:1.15}},
+ spectre:{n:'Âme volée',ic:'💀',d:'Se soigne de 30 % des dégâts infligés.',m:{lifesteal:.3}},
+ magma:{n:'Lave brûlante',ic:'🔥',d:'+15 % de dégâts.',m:{dmg:1.15}},
+ zeus:{n:'Dieu du ciel',ic:'🌩️',d:'+15 % de dégâts.',m:{dmg:1.15}},
+ dragona:{n:'Peau de dragon',ic:'🛡️',d:'Prend 15 % de dégâts en moins.',m:{armor:.85}},
+ chrono:{n:'Temps figé',ic:'🕰️',d:'Les ralentissements durent 2 fois plus longtemps.',m:{slowMul:2}}});
 const HYP_DESC='Quand la jauge violette est pleine : 5 s plus rapide, plus fort, et un super GÉANT !';
 const MODES={
  gem:{name:'Ruée aux gemmes',icon:'💎',col:'#a63ff0',desc:'3 contre 3. Ramasse 10 gemmes et garde-les 15 secondes !',unlock:0},
@@ -319,16 +466,16 @@ const MODES={
 const MODE_ORDER=['gem','sd','ball','bounty'];
 const BOXN={petit:'Petit coffre',grand:'Grand coffre',mega:'Méga coffre'};
 const ROAD=[
-{t:10,r:{coins:150}},{t:20,r:{box:'grand'}},{t:30,mode:'ball'},{t:45,r:{hero:'bruna'}},{t:70,mode:'bounty'},
-{t:90,r:{gems:25}},{t:120,r:{hero:'rocco'}},{t:160,r:{box:'grand'}},{t:200,r:{coins:500}},{t:250,r:{hero:'boum'}},
-{t:300,r:{box:'mega'}},{t:400,r:{gems:50}},{t:500,r:{hero:'lynx'}},{t:650,r:{box:'mega'}},{t:800,r:{coins:1500}},
-{t:1000,r:{hero:'titan'}},{t:1250,r:{box:'mega'}},{t:1500,r:{gems:100}},{t:2000,r:{box:'mega'}}];
+{t:10,r:{coins:150}},{t:15,r:{hero:'kiwi'}},{t:20,r:{box:'grand'}},{t:30,mode:'ball'},{t:45,r:{hero:'bruna'}},{t:60,r:{hero:'grizzly'}},{t:70,mode:'bounty'},
+{t:90,r:{gems:25}},{t:120,r:{hero:'rocco'}},{t:160,r:{box:'grand'}},{t:200,r:{coins:500}},{t:220,r:{hero:'max'}},{t:250,r:{hero:'boum'}},
+{t:300,r:{box:'mega'}},{t:400,r:{gems:50}},{t:450,r:{hero:'rex'}},{t:500,r:{hero:'lynx'}},{t:600,r:{hero:'vortex'}},{t:650,r:{box:'mega'}},{t:800,r:{coins:1500}},
+{t:1000,r:{hero:'titan'}},{t:1100,r:{hero:'dragona'}},{t:1250,r:{box:'mega'}},{t:1500,r:{gems:100}},{t:2000,r:{box:'mega'}}];
 const PASS=[];
 for(let t=1;t<=30;t++){
  let f=t%10===0?{box:'mega'}:t%5===0?{box:'grand'}:t%3===0?{gems:8}:t%2===0?{pp:40}:{coins:60+t*5};
  let p=t%10===0?{box:'mega'}:t%4===0?{gems:15}:t%2===0?{pp:80}:{coins:120+t*8};
- if(t===8)f={hero:'mila'};if(t===30)f={hero:'pyro'};
- if(t===1)p={skin:'riko_or'};if(t===10)p={hero:'gelo'};if(t===15)p={skin:'mila_ange'};if(t===20)p={hero:'nova'};if(t===30)p={skin:'titan_lave'};
+ if(t===8)f={hero:'mila'};if(t===14)f={hero:'sakura'};if(t===22)f={hero:'coco'};if(t===30)f={hero:'pyro'};
+ if(t===1)p={skin:'riko_or'};if(t===10)p={hero:'gelo'};if(t===15)p={skin:'mila_ange'};if(t===20)p={hero:'nova'};if(t===5)p={hero:'luna'};if(t===25)p={hero:'zeus'};if(t===30)p={skin:'titan_lave'};
  PASS.push({f,p});
 }
 const PASS_PRICE=99,TIER_XP=100;
@@ -390,7 +537,7 @@ function drawBrawler(c,hid,skin,x,y,R,ang,flash,walk){
  const acc=L.acc||[];const has=k=>acc.includes(k);const F=col=>flash?'#ffffff':col;const W=walk||0;
  c.save();c.translate(x,y);c.lineJoin='round';c.lineCap='round';c.strokeStyle='#1a1a2e';c.lineWidth=s*.09;
  const hx=0,hy=-s*.72,hr=s*.52;
- if(has('wings')){c.fillStyle=F('#ffffff');for(const k of[-1,1]){c.beginPath();c.ellipse(k*s*.6,-s*.1,s*.45,s*.22,-k*.6,0,TAU);c.fill();c.stroke()}}
+ if(has('wings')){c.fillStyle=F(L.wingCol||'#ffffff');for(const k of[-1,1]){c.beginPath();c.ellipse(k*s*.6,-s*.1,s*.45,s*.22,-k*.6,0,TAU);c.fill();c.stroke()}}
  if(has('cape')){c.fillStyle=F(L.accCol);poly(c,[-s*.4,-s*.2,s*.4,-s*.2,s*.62,s*.8,-s*.62,s*.8]);c.fill();c.stroke()}
  if(L.hair==='long'&&L.hat!=='robot'&&L.hat!=='pumpkin'){c.fillStyle=F(L.hairCol);rr(c,hx-hr*1.08,hy-hr*.3,hr*2.16,hr*1.75,hr*.5);c.fill();c.stroke()}
  if(sa<0)drawWeapon(c,L,s,ang,flash);
@@ -468,6 +615,14 @@ function drawHat(c,L,s,hx,hy,hr,f,F){
  case'tophat':c.beginPath();c.ellipse(hx,hy-hr*.62,hr*1.25,hr*.25,0,0,TAU);c.fill();c.stroke();rr(c,hx-hr*.62,hy-hr*1.85,hr*1.24,hr*1.25,hr*.1);c.fill();c.stroke();c.fillStyle='#c62828';c.fillRect(hx-hr*.62,hy-hr*.95,hr*1.24,hr*.2);break;
  case'samurai':c.beginPath();c.arc(hx,hy-hr*.2,hr*1.05,PI,0);c.closePath();c.fill();c.stroke();rr(c,hx-hr*1.3,hy-hr*.32,hr*2.6,hr*.2,hr*.08);c.fill();c.stroke();c.fillStyle='#ffd21f';c.beginPath();c.moveTo(hx-hr*.7,hy-hr*1.6);c.quadraticCurveTo(hx,hy-hr*.8,hx+hr*.7,hy-hr*1.6);c.quadraticCurveTo(hx,hy-hr*1.1,hx-hr*.7,hy-hr*1.6);c.fill();c.stroke();break;
  case'beanie':c.beginPath();c.arc(hx,hy-hr*.2,hr*1.02,PI,0);c.closePath();c.fill();c.stroke();c.fillStyle='#fff';rr(c,hx-hr*1.05,hy-hr*.4,hr*2.1,hr*.28,hr*.12);c.fill();c.stroke();c.beginPath();c.arc(hx,hy-hr*1.28,hr*.24,0,TAU);c.fill();c.stroke();break;
+ case'bearhood':c.beginPath();c.arc(hx,hy,hr*1.16,0,TAU);c.arc(hx,hy+hr*.1,hr*.84,0,TAU,true);c.fill('evenodd');c.stroke();for(const k of[-1,1]){c.fillStyle=H;c.beginPath();c.arc(hx+k*hr*.82,hy-hr*.95,hr*.32,0,TAU);c.fill();c.stroke();c.fillStyle=F('#d7a86e');c.beginPath();c.arc(hx+k*hr*.82,hy-hr*.95,hr*.15,0,TAU);c.fill()}break;
+ case'hood':c.beginPath();c.arc(hx,hy,hr*1.18,0,TAU);c.arc(hx,hy+hr*.12,hr*.82,0,TAU,true);c.fill('evenodd');c.stroke();poly(c,[hx-hr*.5,hy-hr*1.05,hx,hy-hr*1.7,hx+hr*.5,hy-hr*1.05]);c.fill();c.stroke();break;
+ case'dino':c.beginPath();c.arc(hx,hy,hr*1.16,0,TAU);c.arc(hx,hy+hr*.15,hr*.8,0,TAU,true);c.fill('evenodd');c.stroke();c.fillStyle=F('#ffeb3b');for(let i=-2;i<=2;i++){const a=-PI/2+i*.42;poly(c,[hx+Math.cos(a-.15)*hr*1.1,hy+Math.sin(a-.15)*hr*1.1,hx+Math.cos(a)*hr*1.6,hy+Math.sin(a)*hr*1.6,hx+Math.cos(a+.15)*hr*1.1,hy+Math.sin(a+.15)*hr*1.1]);c.fill();c.stroke()}c.fillStyle='#fff';for(let i=-3;i<=3;i++){poly(c,[hx+i*hr*.22-hr*.08,hy-hr*.72,hx+i*hr*.22,hy-hr*.55,hx+i*hr*.22+hr*.08,hy-hr*.72]);c.fill()}break;
+ case'headphones':c.strokeStyle=H;c.lineWidth=s*.12;c.beginPath();c.arc(hx,hy-hr*.05,hr*1.08,PI*1.05,PI*1.95);c.stroke();c.strokeStyle='#1a1a2e';c.lineWidth=s*.09;for(const k of[-1,1]){c.fillStyle=H;rr(c,hx+k*hr*1.05-hr*.2,hy-hr*.3,hr*.4,hr*.6,hr*.15);c.fill();c.stroke()}break;
+ case'strawhat':c.beginPath();c.ellipse(hx,hy-hr*.55,hr*1.7,hr*.38,0,0,TAU);c.fill();c.stroke();c.beginPath();c.arc(hx,hy-hr*.6,hr*.75,PI,0);c.closePath();c.fill();c.stroke();c.fillStyle=F('#e53935');c.fillRect(hx-hr*.75,hy-hr*.82,hr*1.5,hr*.18);break;
+ case'moon':c.beginPath();c.arc(hx,hy-hr*1.35,hr*.42,0,TAU);c.arc(hx+hr*.2,hy-hr*1.45,hr*.36,0,TAU,true);c.fill('evenodd');c.stroke();c.fillStyle=F('#fff59d');star5(c,hx-hr*.7,hy-hr*1.05,hr*.14);c.fill();star5(c,hx+hr*.75,hy-hr*1.1,hr*.11);c.fill();break;
+ case'laurel':c.fillStyle=H;for(const k of[-1,1])for(let i=0;i<5;i++){const a=PI*1.15+i*.17;const ax=k<0?a:PI*3-a;c.beginPath();c.ellipse(hx+Math.cos(ax)*hr*1.0,hy+Math.sin(ax)*hr*1.0,hr*.2,hr*.1,ax+PI/2,0,TAU);c.fill();c.lineWidth=s*.04;c.stroke()}c.lineWidth=s*.09;break;
+ case'dragon':c.fillStyle=F('#ffe0b2');for(const k of[-1,1]){poly(c,[hx+k*hr*.55,hy-hr*.7,hx+k*hr*.95,hy-hr*1.6,hx+k*hr*.2,hy-hr*.9]);c.fill();c.stroke()}c.fillStyle=H;for(let i=-1;i<=1;i++){poly(c,[hx+i*hr*.3-hr*.12,hy-hr*.9,hx+i*hr*.3,hy-hr*1.3,hx+i*hr*.3+hr*.12,hy-hr*.9]);c.fill();c.stroke()}break;
  }
 }
 function drawWeapon(c,L,s,ang,flash){
@@ -478,13 +633,18 @@ function drawWeapon(c,L,s,ang,flash){
  case'shotgun':c.fillStyle=F('#6d4c41');rr(c,s*.18,-s*.06,s*.32,s*.2,s*.06);c.fill();c.stroke();c.fillStyle=F('#424242');rr(c,s*.45,-s*.15,s*.62,s*.12,s*.04);c.fill();c.stroke();rr(c,s*.45,-s*.03,s*.62,s*.1,s*.04);c.fill();c.stroke();break;
  case'gloves':c.fillStyle=F('#e53935');c.beginPath();c.arc(s*.58,0,s*.27,0,TAU);c.fill();c.stroke();c.fillStyle=F('#fff');rr(c,s*.28,-s*.14,s*.12,s*.28,s*.04);c.fill();c.stroke();c.restore();return;
  case'wand':c.strokeStyle=F('#8d6e63');c.lineWidth=s*.08;c.beginPath();c.moveTo(s*.35,0);c.lineTo(s*.95,0);c.stroke();c.strokeStyle='#1a1a2e';c.lineWidth=s*.06;c.fillStyle=F('#ffe14d');star5(c,s*1.02,0,s*.2);c.fill();c.stroke();c.lineWidth=s*.09;break;
- case'bomb':c.fillStyle=F('#222');c.beginPath();c.arc(s*.62,0,s*.25,0,TAU);c.fill();c.stroke();c.fillStyle='rgba(255,255,255,.35)';c.beginPath();c.arc(s*.55,-s*.08,s*.07,0,TAU);c.fill();c.strokeStyle=F('#8d6e63');c.beginPath();c.moveTo(s*.72,-s*.2);c.lineTo(s*.82,-s*.36);c.stroke();c.fillStyle='#ffdd33';c.beginPath();c.arc(s*.84,-s*.4,s*.07,0,TAU);c.fill();c.strokeStyle='#1a1a2e';break;
+ case'bomb':c.fillStyle=F(L.wCol||'#222');c.beginPath();c.arc(s*.62,0,s*.25,0,TAU);c.fill();c.stroke();c.fillStyle='rgba(255,255,255,.35)';c.beginPath();c.arc(s*.55,-s*.08,s*.07,0,TAU);c.fill();c.strokeStyle=F('#8d6e63');c.beginPath();c.moveTo(s*.72,-s*.2);c.lineTo(s*.82,-s*.36);c.stroke();c.fillStyle='#ffdd33';c.beginPath();c.arc(s*.84,-s*.4,s*.07,0,TAU);c.fill();c.strokeStyle='#1a1a2e';break;
  case'bow':c.strokeStyle=F('#8d6e63');c.lineWidth=s*.09;c.beginPath();c.arc(s*.3,0,s*.5,-1.1,1.1);c.stroke();c.strokeStyle='#ddd';c.lineWidth=s*.03;c.beginPath();c.moveTo(s*.3+Math.cos(-1.1)*s*.5,Math.sin(-1.1)*s*.5);c.lineTo(s*.3+Math.cos(1.1)*s*.5,Math.sin(1.1)*s*.5);c.stroke();c.strokeStyle=F('#a6fff2');c.lineWidth=s*.05;c.beginPath();c.moveTo(s*.35,0);c.lineTo(s*1.0,0);c.stroke();c.strokeStyle='#1a1a2e';c.lineWidth=s*.09;break;
  case'flamer':c.fillStyle=F('#c62828');rr(c,s*.25,-s*.16,s*.38,s*.3,s*.12);c.fill();c.stroke();c.fillStyle=F('#616161');rr(c,s*.6,-s*.07,s*.38,s*.14,s*.04);c.fill();c.stroke();c.fillStyle='#ffb300';c.beginPath();c.arc(s*1.02,0,s*.07,0,TAU);c.fill();break;
  case'icestaff':c.strokeStyle=F('#81d4fa');c.lineWidth=s*.09;c.beginPath();c.moveTo(s*.2,0);c.lineTo(s*.95,0);c.stroke();c.strokeStyle='#1a1a2e';c.lineWidth=s*.06;c.fillStyle=F('#e1f5fe');poly(c,[s*.92,0,s*1.08,-s*.17,s*1.3,0,s*1.08,s*.17]);c.fill();c.stroke();c.lineWidth=s*.09;break;
  case'blades':c.fillStyle=F('#eceff1');for(const k of[-1,1]){poly(c,[s*.35,k*s*.05,s*1.0,k*s*.12,s*.35,k*s*.15]);c.fill();c.stroke()}break;
  case'blaster':c.fillStyle=F('#fafafa');rr(c,s*.32,-s*.14,s*.58,s*.22,s*.09);c.fill();c.stroke();c.fillStyle=F('#76ff03');c.fillRect(s*.42,-s*.06,s*.36,s*.06);c.beginPath();c.arc(s*.92,-s*.03,s*.07,0,TAU);c.fill();break;
  case'hammer':c.strokeStyle=F('#6d4c41');c.lineWidth=s*.1;c.beginPath();c.moveTo(s*.2,0);c.lineTo(s*.95,0);c.stroke();c.strokeStyle='#1a1a2e';c.lineWidth=s*.09;c.fillStyle=F('#9e9e9e');rr(c,s*.82,-s*.3,s*.36,s*.6,s*.07);c.fill();c.stroke();break;
+ case'slingshot':c.strokeStyle=F('#8d6e63');c.lineWidth=s*.09;c.beginPath();c.moveTo(s*.4,0);c.lineTo(s*.7,0);c.lineTo(s*.95,-s*.2);c.moveTo(s*.7,0);c.lineTo(s*.95,s*.2);c.stroke();c.strokeStyle='#ffab91';c.lineWidth=s*.04;c.beginPath();c.moveTo(s*.95,-s*.2);c.lineTo(s*.8,0);c.lineTo(s*.95,s*.2);c.stroke();c.strokeStyle='#1a1a2e';c.lineWidth=s*.09;break;
+ case'claws':c.fillStyle=F('#fafafa');for(const k of[-1,0,1]){poly(c,[s*.45,k*s*.1-s*.04,s*.95,k*s*.16,s*.45,k*s*.1+s*.04]);c.fill();c.lineWidth=s*.04;c.stroke()}c.lineWidth=s*.09;break;
+ case'scythe':c.strokeStyle=F('#5d4037');c.lineWidth=s*.08;c.beginPath();c.moveTo(s*.1,0);c.lineTo(s*1.15,0);c.stroke();c.strokeStyle='#1a1a2e';c.lineWidth=s*.06;c.fillStyle=F('#cfd8dc');c.beginPath();c.moveTo(s*1.1,0);c.quadraticCurveTo(s*1.0,-s*.6,s*.45,-s*.55);c.quadraticCurveTo(s*.9,-s*.35,s*1.0,0);c.closePath();c.fill();c.stroke();c.lineWidth=s*.09;break;
+ case'orb':c.fillStyle=F(L.wCol||'#18ffff');c.globalAlpha=.35;c.beginPath();c.arc(s*.7,0,s*.32,0,TAU);c.fill();c.globalAlpha=1;c.beginPath();c.arc(s*.7,0,s*.2,0,TAU);c.fill();c.stroke();c.fillStyle='rgba(255,255,255,.7)';c.beginPath();c.arc(s*.64,-s*.06,s*.06,0,TAU);c.fill();break;
+ case'lightning':c.strokeStyle=F('#ffd21f');c.lineWidth=s*.08;c.beginPath();c.moveTo(s*.2,0);c.lineTo(s*.9,0);c.stroke();c.strokeStyle='#1a1a2e';c.lineWidth=s*.05;c.fillStyle=F('#fff176');poly(c,[s*.85,-s*.35,s*1.05,-s*.35,s*.95,-s*.08,s*1.15,-s*.08,s*.82,s*.38,s*.92,s*.05,s*.75,s*.05]);c.fill();c.stroke();c.lineWidth=s*.09;break;
  }
  c.fillStyle=F(L.skin);c.beginPath();c.arc(s*.42,0,s*.13,0,TAU);c.fill();c.stroke();
  c.restore();
@@ -515,50 +675,65 @@ function claimCounts(){
  return{pass:pc,road:rc,gift:S.gift!==dayKey()?1:0};
 }
 function ensureQuests(){const d=dayKey();if(S.quests.day!==d){const R=mulberry(hashStr(d+'q'));const pool=QUESTS.slice(),list=[];for(let i=0;i<3;i++){const k=Math.floor(R()*pool.length);list.push(Object.assign({},pool.splice(k,1)[0],{p:0,done:false}))}S.quests={day:d,list};save()}}
+function statVals(h,lvl){const a=h.atk,mul=1+.1*((lvl||1)-1);const dps=a.dmg*(a.n||1)*(a.burst||1);
+ return[['❤️ Vie',fmt(h.hp*mul),clamp(h.hp/8000,.15,1),'#ff5a6e'],['💥 Dégâts',fmt(a.dmg*mul)+((a.n||1)*(a.burst||1)>1?' ×'+(a.n||1)*(a.burst||1):''),clamp(dps/2600,.15,1),'#ffb300'],['👟 Vitesse',h.spd>=250?'Très rapide':h.spd>=220?'Rapide':'Normale',clamp((h.spd-185)/85,.15,1),'#4fc3f7'],['🎯 Portée',rangeTxt(a.range),clamp(a.range/820,.15,1),'#7dff6a']]}
+function statBars(h,lvl){return statVals(h,lvl).map(([n,v,f,c])=>`<div class="sb"><span>${n}</span><div class="bar"><i style="width:${f*100}%;background:${c}"></i></div><b>${v}</b></div>`).join('')}
+function sparkles(n){let h='';for(let i=0;i<n;i++)h+=`<i style="left:${(i*37)%100}%;animation-delay:${(i*0.7)%6}s;animation-duration:${6+(i*1.3)%5}s"></i>`;return`<div class="sparkles">${h}</div>`}
 function renderLobby(){
  ensureQuests();
  const h=HERO[S.sel],hs=S.heroes[S.sel],tt=totalTr(),m=MODES[S.mode],cc=claimCounts(),tier=passTier();
- const pct=tier>=30?100:(S.pass.xp%TIER_XP);
- const b=n=>n?`<span class="badge">${n}</span>`:'';
- const qs=S.quests.list.map(q=>`<div class="qmini">${q.done?'✅':'📜'} ${q.t}<div class="bar"><i style="width:${Math.min(100,q.p/q.n*100)}%"></i></div></div>`).join('');
- $('#s-lobby').innerHTML=`
+ const pct=tier>=30?100:(S.pass.xp%TIER_XP);const rc=RAR[h.rar].c;
+ const b=n=>n?`<span class="badge">${n}</span>`:'';const qleft=S.quests.list.filter(q=>!q.done).length;
+ const plvl=Math.floor(tt/40)+1,pxp=(tt%40)/40*100;
+ const pw=[['gad',GADGETS[S.sel].ic,'Gadget'],['tal',TALENTS[S.sel].ic,'Talent'],['hyp','⚡','Surcharge']].map(([k,ic,n])=>`<div class="pwi ${hs[k]?'on':''}" title="${n}">${ic}<small>${n}</small></div>`).join('');
+ const mb=(act,ic,a,c,txt,badge)=>`<button class="mbtn" data-act="go" data-arg="${act}"><span class="ico" style="--a:${a};--b:${c}">${ic}</span>${txt}${badge}</button>`;
+ $('#s-lobby').innerHTML=`<div class="rays"></div>${sparkles(18)}
  <div class="topbar">
-  <button class="chip" data-act="rename">👤 <b>${esc(S.name)}</b></button>
-  <button class="chip" data-act="go" data-arg="road">🏆 <b>${fmt(tt)}</b></button>
+  <button class="chip prof" data-act="rename"><span class="av"><img src="${portrait(S.sel,hs.skin,96)}"></span><span><b>${esc(S.name)}</b><small>Niveau ${plvl}</small><span class="xpb"><i style="width:${pxp}%"></i></span></span></button>
+  <button class="chip gold" data-act="go" data-arg="road">🏆 <b>${fmt(tt)}</b></button>
   ${money()}
   <button class="chip" data-act="sound">${S.sound?'🔊':'🔇'}</button>
  </div>
  <div class="lmid">
   <div class="lmenu">
-   <button class="mbtn" data-act="go" data-arg="shop"><span>🛒</span>Boutique${b(cc.gift)}</button>
-   <button class="mbtn" data-act="go" data-arg="heroes"><span>🦸</span>Héros</button>
-   <button class="mbtn" data-act="go" data-arg="pass"><span>🎟️</span>Pass${b(cc.pass)}</button>
-   <button class="mbtn" data-act="go" data-arg="quests"><span>📜</span>Quêtes</button>
-   <button class="mbtn" data-act="go" data-arg="road"><span>🏆</span>Trophées${b(cc.road)}</button>
+   ${mb('shop','🛒','#ffd54f','#ff8f00','Boutique',b(cc.gift))}
+   ${mb('heroes','🦸','#80d8ff','#2962ff','Héros','')}
+   ${mb('pass','🎟️','#ffe57f','#c51162','Pass',b(cc.pass))}
+   ${mb('quests','📜','#b9f6ca','#00a152','Quêtes',b(qleft))}
+   ${mb('road','🏆','#ffd180','#dd2c00','Trophées',b(cc.road))}
   </div>
-  <div class="lhero" data-act="go" data-arg="hero" data-arg2="${S.sel}">
-   <div class="hname out">${h.name}</div>
-   <img class="bob" src="${portrait(S.sel,hs.skin,320)}" alt="">
-   <div class="hinfo out"><span class="lvl">NIV ${hs.lvl}</span><span>🏆 ${hs.tr}</span><span style="color:${RAR[h.rar].c}">${h.role}</span></div>
+  <div class="lhero" data-act="go" data-arg="hero" data-arg2="${S.sel}" style="--rc:${rc}">
+   <div class="ribbon out">${h.name}</div>
+   <div class="podium"><img class="bob" src="${portrait(S.sel,hs.skin,340)}" alt=""></div>
+   <div class="hinfo out"><span class="rpill">${RAR[h.rar].n}</span><span class="lvl">NIV ${hs.lvl}</span><span>🏆 ${hs.tr}</span></div>
    <div class="skinsel out"><button data-act="skincyc" data-arg="-1">◀</button><span>🎨 ${hs.skin&&SKIN[hs.skin]?SKIN[hs.skin].name:'Skin normal'}</span><button data-act="skincyc" data-arg="1">▶</button></div>
   </div>
-  <div class="lright"><div class="out" style="font-size:20px">Quêtes du jour</div>${qs}</div>
+  <div class="hcardL" style="--rc:${rc}">
+   <div class="hct out">${h.role}<span>${ownedIds().length}/${HEROES.length} héros</span></div>
+   <p class="bio">${BIOS[S.sel]||''}</p>
+   ${statBars(h,hs.lvl)}
+   <div class="pwrow">${pw}</div>
+   <div class="supl"><b>⭐ ${h.sn}</b> — ${h.sd}</div>
+   <button class="btn small blue" data-act="go" data-arg="heroes" style="width:100%;margin-top:8px">🔄 CHANGER DE HÉROS</button>
+  </div>
  </div>
  <div class="lbot">
-  <div class="passmini" data-act="go" data-arg="pass">🎟️ Pass · palier ${tier}/30<div class="bar"><i style="width:${pct}%"></i></div></div>
+  <div class="passmini" data-act="go" data-arg="pass">🎟️ Pass · palier <b>${tier}</b>/30<div class="bar"><i style="width:${pct}%"></i></div></div>
   <div class="sp"></div>
-  <button class="modecard" data-act="go" data-arg="modes" style="--c:${m.col}"><span class="mi">${m.icon}</span><div><small>MODE (toucher pour changer)</small><b>${m.name}</b></div></button>
+  <button class="modecard" data-act="go" data-arg="modes" style="--c:${m.col}"><span class="mi">${m.icon}</span><div><small>MODE · toucher pour changer</small><b>${m.name}</b></div><span class="chev">›</span></button>
   <button class="btn play" data-act="play">JOUER</button>
  </div>`;
 }
 function renderHeroes(){
- const list=HEROES.slice().sort((a,b)=>(!!S.heroes[b.id])-(!!S.heroes[a.id])||a.rar-b.rar);
- $('#s-heroes').innerHTML=`<div class="hdr">${back()}<h1 class="out">Héros ${ownedIds().length}/${HEROES.length}</h1>${money()}</div>
- <div class="content"><div class="grid">${list.map(h=>{const o=S.heroes[h.id];const up=o&&o.lvl<MAXLVL&&o.pp>=PP_NEED[o.lvl];
- return`<div class="hcard ${o?'':'locked'} ${S.sel===h.id?'sel':''}" style="background:linear-gradient(${RAR[h.rar].c},#1b2366)" data-act="go" data-arg="hero" data-arg2="${h.id}">
-  <span class="tag">${RAR[h.rar].n}</span>${up?'<span class="badge">⬆</span>':''}
-  <img src="${portrait(h.id,o?o.skin:'',236)}" alt=""><div class="n">${h.name}</div>
-  <div class="s">${o?`<span>NIV ${o.lvl}</span><span>🏆 ${o.tr}</span>`:'<span>🔒 Verrouillé</span>'}</div></div>`}).join('')}</div></div>`;
+ let html=`<div class="hdr">${back()}<h1 class="out">Héros ${ownedIds().length}/${HEROES.length}</h1>${money()}</div><div class="content">`;
+ for(let r=5;r>=0;r--){const list=HEROES.filter(h=>h.rar===r);const own=list.filter(h=>S.heroes[h.id]).length;
+  html+=`<div class="rarh out" style="--rc:${RAR[r].c}">${RAR[r].n}<small>${own}/${list.length}</small></div><div class="grid">`;
+  html+=list.map(h=>{const o=S.heroes[h.id];const up=o&&o.lvl<MAXLVL&&o.pp>=PP_NEED[o.lvl];
+   return`<div class="hcard ${o?'':'locked'} ${S.sel===h.id?'sel':''}" style="--rc:${RAR[h.rar].c}" data-act="go" data-arg="hero" data-arg2="${h.id}">
+   <span class="tag">${h.role}</span>${up?'<span class="badge">⬆</span>':''}
+   <img src="${portrait(h.id,o?o.skin:'',236)}" alt=""><div class="n">${h.name}</div>
+   <div class="s">${o?`<span>NIV ${o.lvl}</span><span>🏆 ${o.tr}</span>`:'<span>🔒 Verrouillé</span>'}</div></div>`}).join('')+'</div>';}
+ $('#s-heroes').innerHTML=html+'</div>';
 }
 function abil(hid,o){
  const rows=[['gad','🔧 Gadget',GADGETS[hid],GAD_LVL,GAD_COST,'(3 fois par match)'],['tal','⭐ Talent',TALENTS[hid],TAL_LVL,TAL_COST,'(toujours actif)'],['hyp','💜 Surcharge',{n:HERO[hid].sn+' GÉANT',ic:'⚡',d:HYP_DESC},HYP_LVL,HYP_COST,'']];
@@ -587,10 +762,9 @@ function renderHero(hid){
   ${skins.map(s=>{const own=S.skins.includes(s.id);return`<div class="skin ${o.skin===s.id?'on':''}" data-act="skin" data-arg="${hid}" data-arg2="${s.id}"><img src="${portrait(hid,s.id,160)}" style="${own?'':'filter:brightness(.5)'}"><br>${s.name}<br>${own?'':(s.pass?'🎟️ Pass':'💎 '+s.gems)}</div>`}).join('')}</div>`:'';
  $('#s-hero').innerHTML=`<div class="hdr">${back('heroes')}<h1 class="out">${h.name}</h1><span class="chip" style="background:${RAR[h.rar].c}">${RAR[h.rar].n}</span>${money()}</div>
  <div class="content"><div class="det">
-  <div class="pic"><img class="bob" src="${portrait(hid,o?o.skin:'',320)}"><div class="out" style="font-size:22px">${h.role}${o?' · 🏆 '+o.tr:''}</div></div>
+  <div class="pic" style="--rc:${RAR[h.rar].c}"><div class="podium"><img class="bob" src="${portrait(hid,o?o.skin:'',340)}" style="${o?'':'filter:brightness(.55)'}"></div><div class="out" style="font-size:22px">${h.role}${o?' · 🏆 '+o.tr:''}</div><p class="bio" style="margin-top:8px">${BIOS[hid]||''}</p></div>
   <div style="flex:1">
-   <div class="stats"><div class="stat">❤️ Points de vie<b>${fmt(h.hp*mul)}</b></div><div class="stat">💥 Dégâts<b>${fmt(a.dmg*mul)}${n>1?' ×'+n:''}</b></div>
-   <div class="stat">👟 Vitesse<b>${h.spd>=250?'Très rapide':h.spd>=220?'Rapide':'Normale'}</b></div><div class="stat">🎯 Portée<b>${rangeTxt(a.range)}</b></div></div>
+   <div class="hcardL wide" style="--rc:${RAR[h.rar].c}">${statBars(h,lvl)}</div>
    <div class="abil"><b>Attaque : ${h.an}</b><br>${h.ad}</div>
    <div class="abil sup"><b>⭐ Super : ${h.sn}</b><br>${h.sd}</div>
    ${act}${abil(hid,o)}${sk}
@@ -785,7 +959,7 @@ function genSD(){
 }
 function mkB(hid,team,x,y,lvl,isPlayer,skin,name,skill,eq){
  const h=HERO[hid],mul=1+.1*(lvl-1);
- if(!eq)eq={gad:lvl>=GAD_LVL&&Math.random()<.8,tal:lvl>=TAL_LVL&&Math.random()<.8,hyp:lvl>=HYP_LVL&&Math.random()<.7};
+ if(!eq)eq={gad:lvl>=GAD_LVL&&Math.random()<BOTPOW,tal:lvl>=TAL_LVL&&Math.random()<BOTPOW,hyp:lvl>=HYP_LVL&&Math.random()<BOTPOW*.8};
  if(!isPlayer&&!skin){const sk=SKINS.filter(s=>s.hero===hid);if(sk.length&&Math.random()<.45)skin=pick(sk).id}
  const mods=Object.assign({reload:1,dmg:1,armor:1,aoe:1,range:1,slowMul:1,lifesteal:0,turret:1,regen:1,healZone:1},eq.tal?TALENTS[hid].m:{});
  return{type:'brawler',eq,mods,gadN:eq.gad?3:0,gadCd:0,hyp:0,hyperT:0,shieldT:0,invisT:0,walk:0,h,hid,team,x,y,sx:x,sy:y,r:26,maxHp:h.hp*mul,hp:h.hp*mul,mul,dmgMul:1,lvl,ammo:3,reloadT:0,cool:0,charge:0,isPlayer,alive:true,respawn:0,
@@ -799,8 +973,8 @@ function startMatch(){
  if(mode==='sd'){const g=genSD();G.map=g.map;G.W=g.W;G.H=g.H;G.boxes=g.boxes;G.sp=g.sp}
  else{G.map=mirrorMap(mode==='gem'?GEM_TPL:mode==='ball'?BALL_TPL:BOUNTY_TPL);G.W=25;G.H=33}
  G.time=mode==='bounty'?120:mode==='sd'?0:150;
- const skill=clamp(.42+me.tr/700,.42,.9);const MYEQ={gad:!!me.gad,tal:!!me.tal,hyp:!!me.hyp};
- const lv=()=>clamp(me.lvl+rndi(-1,1),1,MAXLVL);
+ const skill=clamp(.2+me.tr/1100,.2,.72);BOTPOW=clamp(me.tr/500,0,.8);const EDMG=clamp(.7+me.tr/1200,.7,1);const MYEQ={gad:!!me.gad,tal:!!me.tal,hyp:!!me.hyp};
+ const lv=()=>clamp(me.lvl+rndi(-2,0),1,MAXLVL);
  const names=BOTNAMES.slice().sort(()=>Math.random()-.5);
  const pool=HEROES.map(h=>h.id);
  if(mode==='sd'){
@@ -813,6 +987,7 @@ function startMatch(){
   for(let i=0;i<3;i++)G.units.push(mkB(pick(pool),1,(25-xs[i])*T,ry,lv(),false,'',names[i+3],skill));
  }
  G.player=G.units.find(u=>u.isPlayer);
+ for(const u of G.units)if(u.team!==G.player.team){u.dmgMul*=EDMG;u.mods.dmg*=1;u.ai.react=.6}
  if(mode==='gem'){G.mineT=4;G.cdTeam=-1;G.cd=15}
  if(mode==='ball')G.ball={x:G.W*T/2,y:G.H*T/2,vx:0,vy:0,c:null,np:0,npo:null,wb:0,last:null};
  G.cx=G.player.x;G.cy=G.player.y;
@@ -1003,8 +1178,8 @@ function botAI(u,dt){
  if(!tg||!tg.alive||(G.mode==='ball'&&G.ball.c===u))return;
  const d=hyp(tg.x-u.x,tg.y-u.y);const s=u.h.atk;const rng=specRange(s);
  if(ai.fcd<=0&&d<rng*.95&&u.ammo>=1&&(s.kind==='lob'||los(u.x,u.y,tg.x,tg.y))&&visibleTo(u.team,tg)){
-  const a=aimAt(u,tg,s.speed)+(Math.random()-.5)*2*(1-ai.skill)*.4;
-  tryAttack(u,a,false,d);ai.fcd=.3+Math.random()*(1.25-ai.skill)*.9}
+  const a=aimAt(u,tg,s.speed)+(Math.random()-.5)*2*(1-ai.skill)*.62;
+  tryAttack(u,a,false,d);ai.fcd=.5+Math.random()*(1.45-ai.skill)*1.2}
  if(tg.type!=='boxT'){if(u.eq.hyp&&u.hyp>=1&&d<500)activateHyper(u);if(u.eq.gad&&u.gadN>0&&u.gadCd<=0&&Math.random()<dt*.8){const k=GADGETS[u.hid].k;if((k==='heal'&&u.hp<u.maxHp*.5)||(k==='shield'&&G.t-u.lastHurt<1)||(k==='reload'&&u.ammo===0)||(['mine','burst','slowaura','roar'].includes(k)&&d<220)||(['turret','invis','dash','blink'].includes(k)&&d<450))useGadget(u)}}
  if(u.charge>=1&&tg.type!=='boxT'&&wantSuper(u,tg,d)){const hs=u.h.sup;if(hs.kind==='heal')tryAttack(u,0,true,0);else tryAttack(u,aimAt(u,tg,hs.speed||900),true,d)}
 }
@@ -1018,7 +1193,7 @@ function updBrawler(u,dt){
  for(let i=u.bursts.length-1;i>=0;i--){const b=u.bursts[i];b.t-=dt;while(b.t<=0&&b.left>0){fireShot(u,b.s,b.ang,b.sup);b.left--;b.t+=b.s.bd}if(b.left<=0)u.bursts.splice(i,1)}
  const ox=u.x,oy=u.y;
  if(u.jump){const j=u.jump;j.t+=dt;const f=Math.min(1,j.t/j.T);u.x=j.sx+(j.tx-j.sx)*f;u.y=j.sy+(j.ty-j.sy)*f;u.z=Math.sin(PI*f)*90;
-  if(f>=1){u.z=0;u.jump=null;unstick(u);explode(u.x,u.y,j.s.aoe*u.mods.aoe,j.s.dmg*dm(u),j.s.dmg,u.team,u,{wallBreak:j.s.wallBreak,sup:1,knock:150})}}
+  if(f>=1){u.z=0;u.jump=null;unstick(u);explode(u.x,u.y,j.s.aoe*u.mods.aoe,j.s.dmg*dm(u),j.s.dmg,u.team,u,{wallBreak:j.s.wallBreak,sup:1,knock:150,stun:j.s.stun})}}
  else if(u.dash){const d=u.dash;const st=Math.min(dt,d.t);d.t-=dt;if(d.s.wallBreak)breakCircle(u.x,u.y,u.r+12);moveU(u,d.vx*st,d.vy*st);
   if(d.s.dmg>0)for(const e of G.units){if(!e.alive||e.team===u.team||d.hit.has(e))continue;if(hyp(e.x-u.x,e.y-u.y)<u.r+e.r+8){d.hit.add(e);damage(e,d.s.dmg*dm(u),u,{base:d.s.dmg,sup:1,knock:d.s.knock,kA:Math.atan2(d.vy,d.vx)})}}
   G.fx.push({x:u.x,y:u.y,vx:0,vy:0,t:0,life:.25,col:u.h.color,r:u.r*.8,ghost:1});if(d.t<=0)u.dash=null}
