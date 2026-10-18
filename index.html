@@ -328,6 +328,21 @@ button{font:inherit;font-weight:900;color:#fff;cursor:pointer;border:none;backgr
 .pc.rainbow{filter:drop-shadow(0 0 10px rgba(255,120,240,.8))}
 @keyframes rainbowbg{0%{background-position:0% 50%}100%{background-position:100% 50%}}
 .hcard.rar6{background:linear-gradient(135deg,#ff4f4f,#ffb34f,#ffe94f,#5fff6a,#4fd8ff,#7c4fff,#ff4fd8)!important;background-size:300% 300%!important;animation:rainbowbg 4s linear infinite;border-color:#fff!important}
+#s-fame{background:radial-gradient(ellipse at 50% 40%,#8a3cff 0%,#3b2be0 40%,#2420a8 100%)}
+#s-fame:before{display:none}
+.fsky{position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(#fff 1px,transparent 1.5px),radial-gradient(rgba(255,255,255,.6) 1px,transparent 1.5px);background-size:90px 90px,53px 53px;background-position:0 0,27px 31px;opacity:.5}
+.fsky:after{content:"";position:absolute;left:-10%;right:-10%;top:30%;height:70%;border-radius:50%;border:2px solid rgba(255,255,255,.18);transform:rotate(-8deg)}
+.fcard{display:flex;align-items:center;gap:30px;background:linear-gradient(160deg,rgba(255,255,255,.14),rgba(0,0,0,.35));border:3px solid rgba(255,255,255,.35);border-radius:22px;padding:16px 24px;margin-bottom:10px;position:relative;z-index:1}
+.fcard.ex{border-color:#ff8af0;box-shadow:0 0 30px rgba(255,120,240,.6)}
+.fbig{animation:bob 2.6s ease-in-out infinite;filter:drop-shadow(0 0 22px rgba(255,220,120,.6))}
+.fladder{display:flex;gap:10px;align-items:flex-end;overflow-x:auto;touch-action:pan-x;padding:10px 4px 14px;-webkit-overflow-scrolling:touch;position:relative;z-index:1}
+.fnode{min-width:118px;display:flex;flex-direction:column;align-items:center;gap:3px;background:rgba(0,0,0,.3);border-radius:16px;padding:8px;text-align:center;font-size:15px;position:relative;opacity:.6}
+.fnode.ok{opacity:1;background:rgba(255,255,255,.12)}.fnode.cur{outline:4px solid #ffe45a;opacity:1}.fnode.ex{background:linear-gradient(160deg,rgba(255,79,216,.45),rgba(79,123,255,.45));opacity:1}
+.fnode small{font-size:12px;opacity:.85}.fnode .ck{position:absolute;top:4px;right:6px}
+.fameb.gal{animation:hue 6s linear infinite}.fbspin{animation:spin 8s linear infinite}
+@keyframes hue{to{filter:hue-rotate(360deg)}}
+.pcfame{position:absolute;right:-6px;top:4px;z-index:2;filter:drop-shadow(0 3px 0 rgba(0,0,0,.5))}
+.lb-si svg{display:block}
 </style>
 </head>
 <body>
@@ -350,6 +365,7 @@ button{font:inherit;font-weight:900;color:#fff;cursor:pointer;border:none;backgr
   <div class="screen bg" id="s-ranked"></div>
   <div class="screen" id="s-vs"></div>
   <div class="screen bg" id="s-profile"></div>
+  <div class="screen" id="s-fame"></div>
 </div>
 <div id="toast"></div>
 <div id="rotate"><div class="ph">📱</div><div>Tourne ton téléphone<br>pour jouer !</div></div>
@@ -1255,7 +1271,7 @@ function show(id){
 }
 function go(id,arg){
  if(id==='lobby')renderLobby();else if(id==='heroes')renderHeroes();else if(id==='hero')renderHero(arg);else if(id==='shop')renderShop();
- else if(id==='pass')renderPass();else if(id==='road')renderRoad();else if(id==='quests')renderQuests();else if(id==='modes')renderModes();else if(id==='ranked')renderRanked();else if(id==='profile')renderProfile();
+ else if(id==='pass')renderPass();else if(id==='road')renderRoad();else if(id==='quests')renderQuests();else if(id==='modes')renderModes();else if(id==='ranked')renderRanked();else if(id==='profile')renderProfile();else if(id==='fame')renderFame();
  show(id);
 }
 const back=(to)=>`<button class="btn blue small" data-act="go" data-arg="${to||'lobby'}">◀ RETOUR</button>`;
@@ -1308,7 +1324,7 @@ function ensureProf(){if(!S.prof)S.prof={card:'c_ciel',title:'Le Débutant',card
 function pcard(o){const C=CARD[o.card]||CARDS[0];const h=HERO[o.hid];
  return`<div class="pc ${o.me?'me':''} ${C.rainbow?'rainbow':''}" style="--a:${C.bg[0]};--b:${C.bg[1]};--tilt:${o.tilt||0}deg;--tc:${o.tc||'transparent'};${o.delay!=null?`animation-delay:${o.delay}s`:''}">
  <div class="pcin"><div class="pcbg pat-${C.pat}"></div><div class="pcm">${C.m}</div><img class="pch" src="${portrait(o.hid,o.skin,300)}"></div>
- <div class="pcbadge">${rkBadge(o.rkp||0,40)}</div>
+ <div class="pcbadge">${rkBadge(o.rkp||0,40)}</div>${o.fame!=null?`<div class="pcfame">${fameBadge(o.fame,40)}</div>`:''}
  <div class="pcf"><div class="pct"><b>${esc(o.name)}</b><i>${esc(o.title||'')}</i></div><span class="pci" style="background:${RAR[h.rar].c}"><img src="${portrait(o.hid,o.skin,96)}"></span></div></div>`}
 function renderProfile(){
  ensureProf();const P=S.prof,hs=S.heroes[S.sel];const rr_=RKD[rkIdx(S.rk.best)].r;
@@ -1318,7 +1334,7 @@ function renderProfile(){
  const titles=TITLES.filter(t=>!t.secret||t.c()).map(t=>{const ok=t.c();return`<button class="ttl ${P.title===t.n?'on':''} ${ok?'':'lk'}" data-act="settitle" data-arg="${esc(t.n)}"><b>${t.n}</b><small>${ok?(P.title===t.n?'✔ Équipé':'Toucher pour équiper'):'🔒 '+t.d}</small></button>`}).join('');
  const emos=EMOTES.map(m=>{const own=P.emotes.includes(m.e);return`<div class="emw ${own?'':'lk'}"><div class="emi">${emoHtml(S.sel,hs.skin,m.e,84)}</div>${own?'<small>✔ À toi</small>':`<button class="btn small purple" data-act="buyemote" data-arg="${m.e}">💎 ${m.gems}</button>`}</div>`}).join('');
  $('#s-profile').innerHTML=`<div class="hdr">${back()}<h1 class="out">Mon profil</h1><button class="btn small purple" data-act="secret">🔑 Code secret</button>${money()}</div><div class="content">
- <div class="profTop">${pcard({card:P.card,hid:S.sel,skin:hs.skin,name:S.name,title:P.title,rkp:S.rk.pts,me:1,tilt:-2})}
+ <div class="profTop">${pcard({card:P.card,hid:S.sel,skin:hs.skin,name:S.name,title:P.title,rkp:S.rk.pts,me:1,tilt:-2,fame:fameIdx()})}
  <div class="profSt"><div class="out" style="font-size:30px">${esc(S.name)} <button class="btn small blue" data-act="rename">✏️ Pseudo</button></div>
  <div class="rbx"><span>🏆 Trophées</span><b>${fmt(totalTr())}</b></div><div class="rbx"><span>🏅 Meilleur rang</span><b>${rkName(S.rk.best)}</b></div>
  <div class="rbx"><span>⚔️ Victoires</span><b>${S.stats.wins}</b></div><div class="rbx"><span>☠️ Éliminations</span><b>${S.stats.killsT||0}</b></div>
@@ -1358,7 +1374,7 @@ function renderLobby(){
   <button class="lb-sq lbp" data-act="sound">${S.sound?'🔊':'🔇'}</button>
  </div>
  <div class="lb-left">${side('shop','🛒','Boutique',b(cc.gift))}${side('heroes','🦸','Héros','')}${side('quests','📜','Quêtes',b(qleft))}</div>
- <div class="lb-right">${side('profile','🪪','Profil','')}${side('ranked',RKN[RKD[rkIdx(S.rk.pts)].r][3],'Classé','')}${side('profile','😎','Émotes','')}</div>
+ <div class="lb-right">${side('profile','🪪','Profil','')}${side('ranked',RKN[RKD[rkIdx(S.rk.pts)].r][3],'Classé','')}${side('fame',fameBadge(fameIdx(),58),'Gloire','')}</div>
  <div class="lb-hero" data-act="go" data-arg="hero" data-arg2="${S.sel}">
   <div class="lb-tag"><span class="lb-hr">RANG<b>${hrank}</b></span><span class="lb-ht">🏆 ${hs.tr}</span><span class="lb-hp">NIV<b>${hs.lvl}</b></span></div><div class="lb-skn">${h.name} · 🎨 ${hs.skin&&SKIN[hs.skin]?SKIN[hs.skin].name:'Skin normal'}</div>
   <div class="lb-imgw"><div class="lb-sh"></div><img class="lb-img" src="${portraitTall(S.sel,hs.skin,560)}"></div>
@@ -1374,7 +1390,7 @@ function renderLobby(){
 function showVS(){
  const bs=G.units.filter(u=>u.type==='brawler');camUpdate(1);
  const rows=G.mode==='sd'?[bs.slice(0,4),bs.slice(4)]:[bs.filter(u=>u.team===0),bs.filter(u=>u.team===1)];
- let k=0;const row=(list,ri)=>`<div class="vs2r">${list.map(u=>{const tc=G.mode==='sd'?(u.isPlayer?'#ffe14d':'#ffffff'):u.team===0?'#3aa0ff':'#ff4a4a';return pcard({card:u.card,hid:u.hid,skin:u.skin,name:u.name,title:u.title,rkp:u.rkp,me:u.isPlayer,tc,tilt:((k++*37)%5)-2,delay:k*.08})}).join('')}</div>`;
+ let k=0;const row=(list,ri)=>`<div class="vs2r">${list.map(u=>{const tc=G.mode==='sd'?(u.isPlayer?'#ffe14d':'#ffffff'):u.team===0?'#3aa0ff':'#ff4a4a';return pcard({card:u.card,hid:u.hid,skin:u.skin,name:u.name,title:u.title,rkp:u.rkp,fame:u.fame,me:u.isPlayer,tc,tilt:((k++*37)%5)-2,delay:k*.08})}).join('')}</div>`;
  const msg=G.mode==='sd'?'Chacun pour soi !':'🔵 Ton équipe contre l\'équipe rouge 🔴';
  $('#s-vs').innerHTML=`<div class="vs2">${G.ranked?`<div class="vs2rk">${rkBadge(S.rk.pts,34)} CLASSÉ · ${rkName(S.rk.pts)}</div>`:''}${row(rows[0])}<div class="vs2m out">${MODES[G.mode].icon} ${msg}</div>${row(rows[1])}</div><div class="vs2cd out">Le match commence dans <b id="vscd">3</b></div>`;
  show('vs');sfx(220,.3,'sawtooth',.04,2);
@@ -1517,7 +1533,7 @@ const ACTIONS={
   if(S.creator){toast('✨ Tu as déjà les bonus du créateur !');return}S.creator=true;ensureProf();const l=[];
   S.coins+=1000000;S.gems+=1000000;l.push({ic:'💰',t:'+1 000 000 pièces'},{ic:'💎',t:'+1 000 000 gemmes'});
   if(!S.heroes.prisma)S.heroes.prisma={lvl:1,pp:0,tr:0,skin:''};for(const h in S.heroes)S.heroes[h].pp+=1000000;l.push({ic:'⚡',t:'+1 000 000 éclairs',sub:'pour chaque héros'});
-  l.push({ic:'hero:prisma',t:'HÉROS EXCLUSIF !',sub:'Prisma · Créateur',big:1});if(!S.prof.cards.includes('c_createur'))S.prof.cards.push('c_createur');S.prof.card='c_createur';S.prof.title='✨ Le Créateur ✨';l.push({ic:'👑',t:'Carte « Créateur »',sub:'+ titre ✨ Le Créateur ✨',big:1});
+  l.push({ic:'hero:prisma',t:'HÉROS EXCLUSIF !',sub:'Prisma · Créateur',big:1});if(!S.prof.cards.includes('c_createur'))S.prof.cards.push('c_createur');S.prof.card='c_createur';S.prof.title='✨ Le Créateur ✨';l.push({ic:'👑',t:'Carte « Créateur »',sub:'+ titre ✨ Le Créateur ✨',big:1});l.push({ic:'🌌',t:'Gloire exclusive',sub:'Galaxie Arc-en-ciel',big:1});
   S.sel='prisma';save();sfx(500,.5,'triangle',.07,2.5);showRewards(l,null,'👑 Bienvenue, Créateur !')},
  setcard:(id)=>{ensureProf();const c=CARD[id];if(!c)return;if(!S.prof.cards.includes(id)){if(c.rank!=null){toast('🔒 Atteins le rang '+RKN[c.rank][0]+' en Classé');return}if(S.gems<c.gems){toast('Il te manque '+(c.gems-S.gems)+' 💎');return}S.gems-=c.gems;S.prof.cards.push(id);sfx(700,.2,'triangle',.05,1.5);toast('🖼️ Carte débloquée !')}S.prof.card=id;save();renderProfile()},
  settitle:(n)=>{ensureProf();const t=TITLES.find(x=>x.n===n);if(!t)return;if(!t.c()){toast('🔒 '+t.d);return}S.prof.title=n;save();renderProfile()},
@@ -1632,6 +1648,36 @@ function mkB(hid,team,x,y,lvl,isPlayer,skin,name,skill,eq){
   faceA:team===0?-PI/2:PI/2,mvx:0,mvy:0,vx:0,vy:0,kx:0,ky:0,slowT:0,stunT:0,lastHurt:-9,lastAtk:-9,gems:0,cubes:0,stars:2,bursts:[],dash:null,jump:null,z:0,flash:0,shield:0,
   name,skin:skin||'',ai:{t:Math.random()*.2,fcd:.5,skill:skill||.6,gx:x,gy:y,ph:Math.random()*6,st:0,lx:x,ly:y,detT:0,detA:0,tg:null}};
 }
+// ===== GLOIRE =====
+const FAMEP=[{n:'Lune',a:'#f2f6f8',b:'#8e9ba7'},{n:'Terre',a:'#6fd8ff',b:'#1a62c9'},{n:'Mars',a:'#ff8a6a',b:'#b3202b'},{n:'Jupiter',a:'#ffd9a0',b:'#e0661c'},{n:'Soleil',a:'#fff8b0',b:'#ffb300'},{n:'Galaxie Arc-en-ciel',a:'#ff8af0',b:'#4b2bd8',ex:1}];
+const FAMET=[0,300,700,1200,1800,2500,3300,4200,5200,6300,7500,8800,10200,11700,13300];
+const FAME_REW={3:{coins:500,gems:50},6:{box:'mega'},9:{coins:2000,gems:100},12:{gems:300}};
+function fameIdx(){if(S.creator)return 15;const p=(S.fame&&S.fame.pts)||0;let i=0;FAMET.forEach((t,k)=>{if(p>=t)i=k});return i}
+function fameName(i){if(i>=15)return'Galaxie Arc-en-ciel';return FAMEP[Math.floor(i/3)].n+' '+['I','II','III'][i%3]}
+let FBID=0;
+function fameBadge(i,size){const pl=Math.min(5,Math.floor(i/3)),sub=i>=15?3:i%3+1,P=FAMEP[pl],id='fb'+(FBID++);const em=pl===4?'#e8740c':pl===5?'#ffffff':P.b;
+ let back='',deco='',front='';
+ if(pl===4){let pts='';for(let k=0;k<24;k++){const a=k/24*TAU-PI/2,r=k%2?36:49;pts+=(50+Math.cos(a)*r).toFixed(1)+','+(47+Math.sin(a)*r).toFixed(1)+' '}back=`<polygon points="${pts}" fill="url(#${id}g)" stroke="#111" stroke-width="5" stroke-linejoin="round"/>`}
+ if(pl===3){back=`<ellipse cx="50" cy="47" rx="49" ry="15" transform="rotate(-18 50 47)" fill="none" stroke="#111" stroke-width="11"/><ellipse cx="50" cy="47" rx="49" ry="15" transform="rotate(-18 50 47)" fill="none" stroke="#ffcf3d" stroke-width="6"/>`;front=`<path d="M8 62 Q50 72 92 33" fill="none" stroke="#111" stroke-width="11" stroke-linecap="round"/><path d="M8 62 Q50 72 92 33" fill="none" stroke="#ffcf3d" stroke-width="6" stroke-linecap="round"/>`}
+ if(pl===0)deco=`<circle cx="36" cy="64" r="6" fill="#a7b2bb"/><circle cx="70" cy="34" r="5" fill="#a7b2bb"/><circle cx="72" cy="62" r="4" fill="#a7b2bb"/>`;
+ if(pl===1)deco=`<path d="M22 40 q8-14 20-6 q4 10-8 14 q-10 2-12-8z M60 62 q14-8 20 4 q-4 12-18 8z M64 24 q10 0 12 8 q-8 4-12-8z" fill="#3fcf5a"/>`;
+ if(pl===2)deco=`<path d="M18 40 Q50 32 82 42" stroke="#8f1520" stroke-width="5" fill="none" opacity=".5"/><path d="M16 58 Q50 66 84 56" stroke="#8f1520" stroke-width="4" fill="none" opacity=".5"/><circle cx="68" cy="66" r="5" fill="#8f1520" opacity=".5"/>`;
+ if(pl===3)deco=`<path d="M15 38 Q50 30 85 38 M14 52 Q50 46 86 52 M18 64 Q50 60 82 64" stroke="#c4501a" stroke-width="5" fill="none" opacity=".55"/>`;
+ if(pl===5)deco=`<g class="fbspin" style="transform-origin:50px 47px"><path d="M50 47 C50 30 72 28 76 44 C80 62 58 74 42 68 C22 60 22 34 40 24" stroke="rgba(255,255,255,.75)" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M50 47 C50 64 28 66 24 50 C20 32 42 20 58 26 C78 34 78 60 60 70" stroke="rgba(255,255,255,.45)" stroke-width="4" fill="none" stroke-linecap="round"/></g><circle cx="30" cy="30" r="2" fill="#fff"/><circle cx="72" cy="66" r="2" fill="#fff"/><circle cx="70" cy="28" r="1.5" fill="#fff"/>`;
+ const grad=pl===5?`<linearGradient id="${id}g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff4f4f"/><stop offset=".2" stop-color="#ffb34f"/><stop offset=".4" stop-color="#ffe94f"/><stop offset=".55" stop-color="#5fff6a"/><stop offset=".7" stop-color="#4fd8ff"/><stop offset=".85" stop-color="#7c4fff"/><stop offset="1" stop-color="#ff4fd8"/></linearGradient>`:`<radialGradient id="${id}g" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="${P.a}"/><stop offset="1" stop-color="${P.b}"/></radialGradient>`;
+ let stars='';const sw=sub===1?[50]:sub===2?[40,60]:[32,50,68];for(const x of sw){let sp='';for(let k=0;k<10;k++){const a=-PI/2+k*PI/5,r=k%2?5:11;sp+=(x+Math.cos(a)*r).toFixed(1)+','+(91+Math.sin(a)*r).toFixed(1)+' '}stars+=`<polygon points="${sp}" fill="#ffc928" stroke="#111" stroke-width="3" stroke-linejoin="round"/>`}
+ return`<svg class="fameb ${pl===5?'gal':''}" width="${size}" height="${size*1.08}" viewBox="0 0 100 108"><defs>${grad}<clipPath id="${id}c"><circle cx="50" cy="47" r="34"/></clipPath></defs><ellipse cx="52" cy="58" rx="40" ry="38" fill="rgba(0,0,0,.35)"/>${back}<circle cx="50" cy="47" r="35" fill="url(#${id}g)" stroke="#111" stroke-width="5"/><g clip-path="url(#${id}c)">${deco}</g>
+ <g opacity=".55"><ellipse cx="50" cy="44" rx="15" ry="14" fill="#fff"/><ellipse cx="50" cy="55" rx="12" ry="5" fill="${pl===5?'#ffb300':'#fff'}"/></g><path d="M41 38 l7 3 M59 38 l-7 3" stroke="${em}" stroke-width="3" stroke-linecap="round" opacity=".85"/><circle cx="44" cy="44" r="3.2" fill="${em}" opacity=".85"/><circle cx="56" cy="44" r="3.2" fill="${em}" opacity=".85"/>
+ <ellipse cx="36" cy="28" rx="8" ry="5" transform="rotate(-30 36 28)" fill="rgba(255,255,255,.75)"/>${front}${stars}</svg>`}
+function renderFame(){const fi=fameIdx(),p=(S.fame&&S.fame.pts)||0;const nx=fi<14?FAMET[fi+1]:null;const pct=fi>=14?100:(p-FAMET[fi])/(nx-FAMET[fi])*100;
+ let lad='';const N=S.creator?16:15;for(let i=0;i<N;i++){const ok=i<=fi||(i<15&&p>=FAMET[i]);const rw=FAME_REW[i];
+  lad+=`<div class="fnode ${ok?'ok':''} ${i===fi?'cur':''} ${i===15?'ex':''}">${fameBadge(i,i%3===0||i===15?86:62)}<b>${fameName(i)}</b><small>${i===15?'👑 Exclusif créateur':fmt(FAMET[i])+' 🌟'}</small>${rw?`<div class="lrew">${icHtml(rl(rw)[0],26)}<span>${rl(rw)[1]}</span></div>`:''}${ok?'<span class="ck">✅</span>':''}</div>`}
+ $('#s-fame').innerHTML=`<div class="fsky"></div><div class="hdr">${back()}<h1 class="out">Gloire</h1>${money()}</div><div class="content">
+ <div class="fcard ${fi===15?'ex':''}"><div class="fbig">${fameBadge(fi,170)}</div><div style="flex:1"><div class="out" style="font-size:44px">${fameName(fi)}</div>
+ <div style="font-size:20px;margin:4px 0 8px">🌟 ${fmt(p)} points de gloire</div>${fi===15?'<div style="font-size:18px;color:#ffe45a">👑 Gloire exclusive du créateur du jeu. Personne d\'autre ne peut l\'avoir !</div>':`<div class="bar" style="height:22px"><i style="width:${pct}%;background:linear-gradient(#ffe45a,#ff9d00)"></i></div><div style="font-size:16px;margin-top:6px">${nx?`Encore <b>${fmt(nx-p)}</b> 🌟 pour <b>${fameName(fi+1)}</b>`:'Tu as atteint le Soleil ! ☀️'}</div>`}
+ <div style="font-size:14px;margin-top:10px;opacity:.85;font-weight:700">Gagne de la gloire à chaque match : +20 par partie, +30 par victoire, +5 par élimination, +20 en Classé. Elle ne redescend jamais !</div></div></div>
+ <div class="sec out">🪐 Le chemin de la gloire</div><div class="fladder">${lad}</div></div>`;
+ setTimeout(()=>{const l=$('#s-fame .fladder');if(l)l.scrollLeft=Math.max(0,(Math.min(fi,14)-2)*120)},0)}
 function renderRanked(){
  const p=S.rk.pts,i=rkIdx(p),d=RKD[i],nx=RKD[i+1];const pct=nx?(p-d.min)/(nx.min-d.min)*100:100;
  let lad='';for(let r=0;r<RKN.length;r++){const first=RKD.find(x=>x.r===r);const ok=p>=first.min;const rw=RK_REW[r];
@@ -1672,7 +1718,7 @@ function startMatch(opts){
  G.player=G.units.find(u=>u.isPlayer);
  G.ranked=ranked;ensureProf();
  for(const u of G.units)if(u.type==='brawler'){if(u.isPlayer){u.card=S.prof.card;u.title=S.prof.title}else{u.card=pick(CARDS.filter(c=>!c.secret)).id;u.title=pick(TITLES.filter(t=>!t.secret)).n}}
- for(const u of G.units){if(u.team!==G.player.team)u.dmgMul*=EDMG;if(u.isPlayer){u.tr=me.tr;u.rkp=S.rk.pts}else{u.tr=Math.max(0,me.tr+rndi(-30,40));u.rkp=clamp(S.rk.pts+rndi(-120,120),0,2600)}}
+ for(const u of G.units){if(u.team!==G.player.team)u.dmgMul*=EDMG;if(u.isPlayer){u.tr=me.tr;u.rkp=S.rk.pts;u.fame=fameIdx()}else{u.tr=Math.max(0,me.tr+rndi(-30,40));u.rkp=clamp(S.rk.pts+rndi(-120,120),0,2600);u.fame=clamp(Math.min(fameIdx(),14)+rndi(-2,2),0,14)}}
  if(mode==='gem'){G.mineT=4;G.cdTeam=-1;G.cd=15}
  if(mode==='ball')G.ball={x:G.W*T/2,y:G.H*T/2,vx:0,vy:0,c:null,np:0,npo:null,wb:0,last:null};
  G.cx=G.player.x;G.cy=G.player.y;
@@ -1978,12 +2024,13 @@ function endMatch(res,rank){
  if(G.ranked){dTr=0;const old=S.rk.pts,oi=rkIdx(old);dRk=res==='win'?25+((S.rk.streak||0)>=2?5:0):res==='draw'?5:(old<300?0:-15);S.rk.streak=res==='win'?(S.rk.streak||0)+1:0;const floor=RKD.find(x=>x.r===RKD[oi].r).min;S.rk.pts=Math.max(floor,old+dRk);dRk=S.rk.pts-old;const ni=rkIdx(S.rk.pts);if(ni>oi)rkUp=rkName(S.rk.pts);S.rk.best=Math.max(S.rk.best,S.rk.pts);for(let r=1;r<=RKD[ni].r;r++)if(!S.rk.got.includes(r)&&RK_REW[r]){S.rk.got.push(r);grant(RK_REW[r]);rkRew.push(r)}}
  if(hs.tr+dTr<0)dTr=-hs.tr;
  const oldTT=totalTr(),oldTier=passTier();
- hs.tr+=dTr;S.coins+=coins;S.pass.xp+=tok;S.stats.games++;if(win)S.stats.wins++;S.stats.killsT=(S.stats.killsT||0)+G.stats.kills;S.stats.gemsT=(S.stats.gemsT||0)+G.stats.gems;S.stats.goalsT=(S.stats.goalsT||0)+G.stats.goals;if(G.mode==='sd'&&rank===1)S.stats.sdWins=(S.stats.sdWins||0)+1;
+ hs.tr+=dTr;S.coins+=coins;S.pass.xp+=tok;if(!S.fame)S.fame={pts:0,got:[]};const fOld=fameIdx();const fG=20+(win?30:0)+G.stats.kills*5+(G.ranked?20:0);S.fame.pts+=fG;const fNew=fameIdx();const fRew=[];for(let i=fOld+1;i<=Math.min(fNew,14);i++)if(FAME_REW[i]&&!S.fame.got.includes(i)){S.fame.got.push(i);grant(FAME_REW[i]);fRew.push(i)}
+ S.stats.games++;if(win)S.stats.wins++;S.stats.killsT=(S.stats.killsT||0)+G.stats.kills;S.stats.gemsT=(S.stats.gemsT||0)+G.stats.gems;S.stats.goalsT=(S.stats.goalsT||0)+G.stats.goals;if(G.mode==='sd'&&rank===1)S.stats.sdWins=(S.stats.sdWins||0)+1;
  for(const u of G.units)if(u.type==='brawler'&&!u.isPlayer&&u.alive&&Math.random()<.5&&((G.mode==='sd')||(u.team===0)===(res==='win')))sendEmote(u,pick(['😂','😎','GG','👑','🔥']));S.stats.best=Math.max(S.stats.best,totalTr());
  ensureQuests();const done=[];const st={play:1,win:win?1:0,dmg:G.stats.dmg,kills:G.stats.kills,gems:G.stats.gems,goals:G.stats.goals,sdtop:G.mode==='sd'&&rank<=3?1:0};
  for(const q of S.quests.list){if(q.done)continue;q.p+=st[q.k]||0;if(q.p>=q.n){q.p=q.n;q.done=true;S.pass.xp+=q.rew;done.push(q)}}
  const newModes=MODE_ORDER.filter(k=>MODES[k].unlock>oldTT&&MODES[k].unlock<=totalTr());
- G.reward={res,rank,dTr,tok,coins,done,newTier:passTier()>oldTier,newModes,win,ranked:G.ranked,dRk,rkUp,rkRew};save();
+ G.reward={fG,fUp:fNew>fOld&&fNew<15?fameName(fNew):null,fRew,res,rank,dTr,tok,coins,done,newTier:passTier()>oldTier,newModes,win,ranked:G.ranked,dRk,rkUp,rkRew};save();
  const txt=G.mode==='sd'?(rank===1?'1er ! 🏆':'#'+rank):res==='win'?'VICTOIRE !':res==='draw'?'ÉGALITÉ':'DÉFAITE';
  G.banner={txt,col:win||res==='win'?'#ffe14d':res==='draw'?'#ffffff':'#ff6b6b',t:0,dur:3};
  sfx(win?660:180,.6,'triangle',.07,win?2:.5);
@@ -1996,11 +2043,12 @@ function showResults(){
   <div class="restitle out" style="color:${col}">${title}</div>
   <div style="display:flex;align-items:center;gap:20px"><img src="${portrait(S.sel,hs.skin,240)}" style="width:150px;height:150px">
   <div class="resrow"><div class="rbox">🏆 Trophées<b style="color:${r.dTr>0?'#7dff6a':r.dTr<0?'#ff7b7b':'#fff'}">${r.dTr>0?'+':''}${r.dTr}</b></div>
-  <div class="rbox">🎫 Jetons pass<b>+${r.tok}</b></div><div class="rbox">💰 Pièces<b>+${r.coins}</b></div>
+  <div class="rbox">🌟 Gloire<b>+${r.fG}</b></div><div class="rbox">🎫 Jetons pass<b>+${r.tok}</b></div><div class="rbox">💰 Pièces<b>+${r.coins}</b></div>
   ${r.ranked?`<div class="rbox">${rkBadge(S.rk.pts,46)}<br>Classé<b style="color:${r.dRk>0?'#7dff6a':r.dRk<0?'#ff7b7b':'#fff'}">${r.dRk>0?'+':''}${r.dRk}</b></div>`:''}
   <div class="rbox">💥 Dégâts<b>${fmt(G.stats.dmg)}</b></div><div class="rbox">☠️ Éliminations<b>${G.stats.kills}</b></div></div></div>
   ${r.done.map(q=>`<div class="chip" style="background:#2fbf3a">✅ Quête finie : ${q.t} · +${q.rew} 🎫</div>`).join('')}
   ${r.newTier?'<div class="chip" style="background:#d98400">🎟️ Nouveau palier du pass ! Va récupérer ta récompense.</div>':''}
+  ${r.fUp?`<div class="chip" style="background:#5b3be0">🪐 Nouvelle gloire : ${r.fUp} !${r.fRew.map(x=>' · 🎁 '+rl(FAME_REW[x])[1]).join('')}</div>`:''}
   ${r.rkUp?`<div class="chip" style="background:#8e24aa">🏅 Nouveau rang : ${r.rkUp} !</div>`:''}${r.rkRew.map(x=>`<div class="chip" style="background:#d98400">🎁 Récompense ${RKN[x][0]} : ${rl(RK_REW[x])[1]}</div>`).join('')}
   ${r.newModes.map(k=>`<div class="chip" style="background:${MODES[k].col}">🎉 Nouveau mode débloqué : ${MODES[k].name} !</div>`).join('')}
   <div style="display:flex;gap:16px"><button class="btn blue" data-act="tolobby">CONTINUER</button><button class="btn green" data-act="again">REJOUER</button></div></div>`;
