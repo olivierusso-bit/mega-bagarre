@@ -1248,9 +1248,9 @@ function renderProfile(){
 function emoHtml(hid,skin,e,size){return`<span class="emo" style="width:${size}px;height:${size}px"><img src="${portrait(hid,skin,160)}"><b style="font-size:${e.length>2||/^[A-Z]/.test(e)?size*.3:size*.42}px">${e}</b></span>`}
 const IMGC={};function himg(hid,skin){const k=hid+'|'+(skin||'');if(!IMGC[k]){const im=new Image();im.src=portrait(hid,skin,128);IMGC[k]=im}return IMGC[k]}
 function sendEmote(u,e){if(!u||!u.alive||(u.emoteT&&G.t-u.emoteT<1.2))return;u.emote=e;u.emoteT=G.t;if(u.isPlayer||nearP(u.x,u.y))sfx(880,.08,'triangle',.04,1.5)}
-function drawEmote(c,u,y){if(!u.emote||G.t-u.emoteT>2.3)return;const age=G.t-u.emoteT;const sc=age<.15?age/.15*1.15:age<.25?1.15-(age-.15)*1.5:1;const r=28*sc;const cy=y-46-Math.sin(age*3)*3;
+function drawEmote(c,u,y){if(!u.emote||G.t-u.emoteT>2.3)return;const age=G.t-u.emoteT;const sc=age<.15?age/.15*1.15:age<.25?1.15-(age-.15)*1.5:1;const r=Math.max(6,28*Math.max(0,sc));const cy=y-46-Math.sin(age*3)*3;
  c.save();c.fillStyle='#fff';c.strokeStyle='#111';c.lineWidth=4;c.beginPath();c.arc(u.x,cy,r,0,TAU);c.fill();c.stroke();c.beginPath();c.moveTo(u.x-8,cy+r-3);c.lineTo(u.x,cy+r+12);c.lineTo(u.x+8,cy+r-3);c.fill();
- c.beginPath();c.arc(u.x,cy,r-3,0,TAU);c.clip();const im=himg(u.hid,u.skin);if(im.complete&&im.naturalWidth)c.drawImage(im,u.x-r*1.5,cy-r*1.05,r*3,r*3);c.restore();
+ c.beginPath();c.arc(u.x,cy,Math.max(1,r-3),0,TAU);c.clip();const im=himg(u.hid,u.skin);if(im.complete&&im.naturalWidth)c.drawImage(im,u.x-r*1.5,cy-r*1.05,r*3,r*3);c.restore();
  if(u.emote==='GG')txt(c,'GG',u.x+r*.55,cy+r*.5,22*sc,'#ffe14d');else{c.font=`${Math.round(28*sc)}px sans-serif`;c.textAlign='center';c.textBaseline='middle';c.fillText(u.emote,u.x+r*.62,cy+r*.55)}}
 function emoSlots(g){const L=(S.prof&&S.prof.emotes)||['👍'];return L.slice(0,8).map((e,i)=>({e,x:g.emo.x+((i%4)+1)*g.s*.115,y:g.emo.y+Math.floor(i/4)*g.s*.115,r:g.s*.048}))}
 function emoHit(x,y){if(!G||!G.emoOpen)return false;const g=geom();for(const b of emoSlots(g))if(hyp(x-b.x,y-b.y)<b.r*1.3){sendEmote(G.player,b.e);G.emoOpen=false;return true}if(hyp(x-g.emo.x,y-g.emo.y)<g.emo.r*1.6){G.emoOpen=false;return true}G.emoOpen=false;return false}
@@ -2111,7 +2111,7 @@ window.addEventListener('resize',resize);window.addEventListener('orientationcha
 let last=performance.now();
 function loop(now){
  const dt=Math.min(.05,(now-last)/1000);last=now;
- try{if(G&&(screen==='game'||screen==='pause'||screen==='vs')){if(screen==='game'&&!G.paused)update(dt);if(E3G)render3();else render()}}catch(e){window.onerror(e.message,'',e.stack?e.stack.split('\n')[1]:'');console.error(e);G=null;go('lobby')}
+ try{if(G&&(screen==='game'||screen==='pause'||screen==='vs')){if(screen==='game'&&!G.paused)update(dt);try{if(E3G)render3();else render()}catch(er){if(!loop.warned){loop.warned=1;console.error(er)}try{ctx.setTransform(DPR,0,0,DPR,0,0)}catch(_){}}}}catch(e){window.onerror(e.message,'',e.stack?e.stack.split('\n')[1]:'');console.error(e);G=null;go('lobby')}
  requestAnimationFrame(loop);
 }
 document.addEventListener('touchstart',()=>audioInit(),{passive:true});
