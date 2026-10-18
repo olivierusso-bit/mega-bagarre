@@ -324,6 +324,10 @@ button{font:inherit;font-weight:900;color:#fff;cursor:pointer;border:none;backgr
 .emo{position:relative;display:inline-block;border-radius:50%;background:#fff;border:4px solid #111;overflow:hidden}
 .emo img{position:absolute;left:-25%;top:-12%;width:150%;height:150%}
 .emo b{position:absolute;right:2px;bottom:-2px;line-height:1;color:#ff9d00;text-shadow:0 2px 0 #000}
+.pc.rainbow .pcin{background:linear-gradient(135deg,#ff4f4f,#ffb34f,#ffe94f,#5fff6a,#4fd8ff,#7c4fff,#ff4fd8,#ff4f4f);background-size:400% 400%;animation:rainbowbg 5s linear infinite;border-color:#fff}
+.pc.rainbow{filter:drop-shadow(0 0 10px rgba(255,120,240,.8))}
+@keyframes rainbowbg{0%{background-position:0% 50%}100%{background-position:100% 50%}}
+.hcard.rar6{background:linear-gradient(135deg,#ff4f4f,#ffb34f,#ffe94f,#5fff6a,#4fd8ff,#7c4fff,#ff4fd8)!important;background-size:300% 300%!important;animation:rainbowbg 4s linear infinite;border-color:#fff!important}
 </style>
 </head>
 <body>
@@ -379,7 +383,7 @@ function audioInit(){if(!AC){try{AC=new(window.AudioContext||window.webkitAudioC
 function sfx(f,d,type,vol,slide){if(!AC||!S.sound)return;try{d=d||.08;const t=AC.currentTime,o=AC.createOscillator(),g=AC.createGain();o.type=type||'square';o.frequency.setValueAtTime(f,t);if(slide)o.frequency.exponentialRampToValueAtTime(Math.max(30,f*slide),t+d);g.gain.setValueAtTime(vol||.05,t);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+d+.03)}catch(e){}}
 
 // ================= DONNÉES =================
-const RAR=[{n:'Commun',c:'#8fa3b8'},{n:'Rare',c:'#2fbf4a'},{n:'Super rare',c:'#2a8cf0'},{n:'Épique',c:'#a63ff0'},{n:'Mythique',c:'#ef3352'},{n:'Légendaire',c:'#f2b705'}];
+const RAR=[{n:'Commun',c:'#8fa3b8'},{n:'Rare',c:'#2fbf4a'},{n:'Super rare',c:'#2a8cf0'},{n:'Épique',c:'#a63ff0'},{n:'Mythique',c:'#ef3352'},{n:'Légendaire',c:'#f2b705'},{n:'Créateur',c:'#ff4fd8',rainbow:1}];
 const RAR_PRICE=[0,700,1400,2800,4800,8500];
 const HEROES=[
 {id:'riko',name:'Riko',rar:0,role:'Tireur',color:'#f3a23b',acc:'cowboy',hp:3600,spd:215,reload:1.4,
@@ -456,7 +460,10 @@ HEROES.push(
  atk:{kind:'shot',n:5,spread:.45,speed:650,range:320,dmg:200,r:11,col:'#ff6d00',pierce:1,flame:1},sup:{kind:'ring',n:24,speed:560,range:420,dmg:520,r:15,col:'#ff1744',pierce:1}},
 {id:'chrono',name:'Chrono',rar:5,role:'Contrôle',color:'#ffb300',hp:3400,spd:220,reload:1.3,ad:'Deux aiguilles qui ralentissent les ennemis.',sd:'Arrête le temps : les ennemis sont figés.',an:'Aiguilles du temps',sn:'Arrêt du temps',
  atk:{kind:'shot',n:1,burst:2,bd:.1,speed:900,range:560,dmg:480,r:9,col:'#ffe082',slow:1},sup:{kind:'lob',speed:750,range:520,dmg:900,aoe:200,r:16,col:'#ffca28',stun:2.2}});
-const BIOS={
+HEROES.push({id:'prisma',name:'Prisma',rar:6,role:'Créateur',color:'#ff4fd8',secret:1,hp:5200,spd:240,reload:1,ad:'3 rayons arc-en-ciel qui traversent les ennemis.',sd:'Une explosion arc-en-ciel tout autour de lui.',an:'Rayon prisme',sn:'Big Bang arc-en-ciel',
+ atk:{kind:'shot',n:3,spread:.3,speed:1100,range:620,dmg:520,r:9,col:'#ff4fd8',pierce:1},sup:{kind:'ring',n:26,speed:700,range:480,dmg:620,r:13,col:'#ffe14d',pierce:1}});
+const HEROES_PUB=()=>HEROES.filter(h=>!h.secret);
+const BIOS={prisma:"Le canard du créateur du jeu. Il est multicolore et il n'en existe qu'un seul au monde !",
  riko:"Le cow-boy le plus rapide de l'arène. Il ne rate jamais une occasion de faire le malin.",
  bruna:"Une rockeuse au grand cœur qui adore le bruit… surtout celui de son fusil à pompe.",
  rocco:"Ouvrier de chantier costaud. Il casse des murs avant le petit-déjeuner.",
@@ -497,6 +504,7 @@ const LOOKS={
  nova:{skin:'#f5d0b0',top:'#e0e0e0',pants:'#9e9e9e',hair:'bob',hairCol:'#7c4dff',hat:'spacehelmet',hatCol:'#9ccc65',acc:[],accCol:'#9ccc65',weapon:'blaster'},
  titan:{skin:'#b5835a',top:'#6d4c41',pants:'#3e2723',hair:'long',hairCol:'#ffb74d',hat:'viking',hatCol:'#9e9e9e',acc:['beard'],accCol:'#ffb74d',weapon:'hammer',big:1.12}};
 Object.assign(LOOKS,{
+ prisma:{skin:'#ffe0bd',top:'#ff4fd8',pants:'#4f7bff',hair:'none',hairCol:'#ffffff',hat:'crown',hatCol:'#ffd21f',acc:['cape','sunglasses'],accCol:'#7c4fff',weapon:'orb',wCol:'#ff4fd8',rainbow:1,eye:'#7c4fff'},
  kiwi:{skin:'#ffe0bd',top:'#7cb342',pants:'#5d4037',hair:'short',hairCol:'#ff8f00',hat:'cap',hatCol:'#558b2f',acc:[],accCol:'#fff',weapon:'slingshot'},
  grizzly:{skin:'#d7a86e',top:'#6d4c41',pants:'#3e2723',hair:'none',hairCol:'#000',hat:'bearhood',hatCol:'#795548',acc:['beard'],accCol:'#4e342e',weapon:'claws',big:1.12},
  sakura:{skin:'#ffe0c4',top:'#f48fb1',pants:'#ad1457',hair:'long',hairCol:'#212121',hat:'flower',hatCol:'#ff80ab',acc:[],accCol:'#fff',weapon:'blades',dress:1},
@@ -570,6 +578,7 @@ const TALENTS={
  nova:{n:'Tourelle blindée',ic:'🔩',d:'Tourelles 40 % plus solides et plus fortes.',m:{turret:1.4}},
  titan:{n:'Cœur de pierre',ic:'❤️',d:'Se soigne 2 fois plus vite.',m:{regen:2}}};
 Object.assign(GADGETS,{
+ prisma:{n:'Saut prisme',ic:'🌈',d:'Se téléporte un peu plus loin.',k:'blink'},
  kiwi:{n:'Poche pleine',ic:'🎒',d:"Recharge toutes ses munitions d'un coup.",k:'reload'},
  grizzly:{n:'Grognement',ic:'🐻',d:'Repousse et blesse les ennemis proches.',k:'roar'},
  sakura:{n:'Pas de fleur',ic:'🌸',d:'Se téléporte un peu plus loin.',k:'blink'},
@@ -585,6 +594,7 @@ Object.assign(GADGETS,{
  dragona:{n:'Écailles de feu',ic:'🐉',d:'Lance des flammèches tout autour.',k:'burst'},
  chrono:{n:'Saut temporel',ic:'⏳',d:'Se téléporte un peu plus loin.',k:'blink'}});
 Object.assign(TALENTS,{
+ prisma:{n:'Pouvoir du créateur',ic:'👑',d:'+20 % de dégâts et se soigne de 15 % des dégâts infligés.',m:{dmg:1.2,lifesteal:.15}},
  kiwi:{n:'Gros cailloux',ic:'🪨',d:'+15 % de dégâts.',m:{dmg:1.15}},
  grizzly:{n:'Fourrure épaisse',ic:'🧸',d:'Prend 15 % de dégâts en moins.',m:{armor:.85}},
  sakura:{n:'Pétales vampires',ic:'🌺',d:'Se soigne de 25 % des dégâts infligés.',m:{lifesteal:.25}},
@@ -654,12 +664,12 @@ function grant(r,list){
  if(r.gems){S.gems+=r.gems;list.push({ic:'💎',t:'+'+r.gems+' gemmes'})}
  if(r.pp){let h=r.ppHero;if(!h||!S.heroes[h])h=pick(ownedIds());S.heroes[h].pp+=r.pp;list.push({ic:'hero:'+h,t:'+'+r.pp+' ⚡ force',sub:HERO[h].name})}
  if(r.hero){if(S.heroes[r.hero]){const c=150*(HERO[r.hero].rar+1);S.coins+=c;list.push({ic:'💰',t:'+'+c+' pièces',sub:HERO[r.hero].name+' déjà possédé'})}
-  else{S.heroes[r.hero]={lvl:1,pp:0,tr:0,skin:''};list.push({ic:'hero:'+r.hero,t:'NOUVEAU HÉROS !',sub:HERO[r.hero].name+' · '+RAR[HERO[r.hero].rar].n,big:1});sfx(660,.4,'triangle',.06,2)}}
+  else{S.heroes[r.hero]={lvl:1,pp:S.creator?1000000:0,tr:0,skin:''};list.push({ic:'hero:'+r.hero,t:'NOUVEAU HÉROS !',sub:HERO[r.hero].name+' · '+RAR[HERO[r.hero].rar].n,big:1});sfx(660,.4,'triangle',.06,2)}}
  if(r.skin){if(!S.skins.includes(r.skin)){S.skins.push(r.skin);list.push({ic:'skin:'+r.skin,t:'NOUVEAU SKIN !',sub:SKIN[r.skin].name,big:1})}else{S.gems+=20;list.push({ic:'💎',t:'+20 gemmes',sub:'skin déjà possédé'})}}
  if(r.box){list.push(...rollBox(r.box))}
  return list;
 }
-function randHeroDrop(){const pool=HEROES.filter(h=>!S.heroes[h.id]&&h.rar>0);if(!pool.length)return null;const w=[0,40,26,16,10,6];let tot=pool.reduce((a,h)=>a+w[h.rar],0),x=Math.random()*tot;for(const h of pool){x-=w[h.rar];if(x<=0)return h.id}return pool[0].id}
+function randHeroDrop(){const pool=HEROES.filter(h=>!S.heroes[h.id]&&h.rar>0&&!h.secret);if(!pool.length)return null;const w=[0,40,26,16,10,6];let tot=pool.reduce((a,h)=>a+w[h.rar],0),x=Math.random()*tot;for(const h of pool){x-=w[h.rar];if(x<=0)return h.id}return pool[0].id}
 function rollBox(type){
  const n={petit:2,grand:5,mega:12}[type]||2;let coins=0,gems=0;const pp={},list=[];
  for(let i=0;i<n;i++){const r=Math.random();
@@ -1059,6 +1069,7 @@ function charRec(hid,skin){const key=hid+'|'+(skin||'');if(REC[key])return REC[k
  acc3(body,glass,ac2,hy+.04,{sk:YEL,top,ac,hat,hair:YEL,C,dk,lt,has:k=>ac2.acc.includes(k),GOLD,RED,GREY,W,K});
  if(has('beard'))ell(body,0,hy-.22,.12,.18,.12,.14,ac);
  hat3(body,glass,L,hy+.02,{hat,hair:YEL,ac,C,dk,lt,GOLD,RED,GREY,W,K,sk:YEL});
+ if(L.rainbow)for(const B of[body,armL,armR]){for(let v=0;v<B.c.length/4;v++){const r=B.c[v*4],g=B.c[v*4+1],b=B.c[v*4+2];const isY=(Math.abs(r-YEL[0])<.02&&Math.abs(g-YEL[1])<.02&&Math.abs(b-YEL[2])<.02)||(Math.abs(r-YD[0])<.02&&Math.abs(g-YD[1])<.02&&Math.abs(b-YD[2])<.02);if(!isY)continue;const hue=((B.p[v*3+1]*.55+B.p[v*3]*.35)%1+1)%1;const k=(n)=>{const kk=(n+hue*6)%6;return 1-Math.max(0,Math.min(kk,4-kk,1))*.75};B.c[v*4]=k(5);B.c[v*4+1]=k(3);B.c[v*4+2]=k(1)}}
  return REC[key]={key,body,legL,legR,armL,armR,glass:glass.p.length?glass:null,piv:{legL:[-.14,.42,0],legR:[.14,.42,0],armL:[-.32,.84,0],armR:[.32,.84,0]}};
 }
 // ===================== RENDU 3D DU JEU =====================
@@ -1162,7 +1173,7 @@ function drawDuck2D(c,hid,skin,x,y,R,ang,flash,walk){
  const F=col=>flash?'#ffffff':col;const W=walk||0;const OL='#1a1a2e';
  c.save();c.translate(x,y);
  FLAT=true;try{drawDuck2Di(c,L0,L,s,ca,sa,f,back,acc,has,F,W,OL,ang,flash)}finally{FLAT=false;c.restore()}}
-function drawDuck2Di(c,L0,L,s,ca,sa,f,back,acc,has,F,W,OL,ang,flash){const Y='#ffd23f',YD='#f2b705',BE='#fff4c9',OR='#ff9a1f',ORD='#d9750c';
+function drawDuck2Di(c,L0,L,s,ca,sa,f,back,acc,has,F,W,OL,ang,flash){let Y='#ffd23f',YD='#f2b705';if(L0.rainbow&&!flash){const g=c.createLinearGradient(-s*.5,-s*1.5,s*.5,s*.5);['#ff4f4f','#ffb34f','#ffe94f','#5fff6a','#4fd8ff','#7c4fff','#ff4fd8'].forEach((cl,i)=>g.addColorStop(i/6,cl));Y=g;YD=g}const BE='#fff4c9',OR='#ff9a1f',ORD='#d9750c';
  c.save();c.lineJoin='round';c.lineCap='round';c.strokeStyle=OL;c.lineWidth=s*.08;
  const hx=0,hy=-s*1.0,hr=s*.44;
  if(has('cape')){c.fillStyle=F(L0.accCol);poly(c,[-s*.36,-s*.42,s*.36,-s*.42,s*.62,s*.6,-s*.62,s*.6]);c.fill();c.stroke()}
@@ -1274,7 +1285,8 @@ const CARDS=[
 {id:'c_volcan',n:'Volcan',bg:['#ffab40','#3e1b10'],m:'🌋',pat:'bricks',rank:2},
 {id:'c_champion',n:'Champion',bg:['#ffe082','#d84315'],m:'🏆',pat:'stars',rank:3},
 {id:'c_royal',n:'Royal',bg:['#fff59d','#5e1a8a'],m:'👑',pat:'stars',rank:5},
-{id:'c_pro',n:'Pro',bg:['#ffffff','#111111'],m:'⚡',pat:'grid',rank:7}];
+{id:'c_pro',n:'Pro',bg:['#ffffff','#111111'],m:'⚡',pat:'grid',rank:7},
+{id:'c_createur',n:'Créateur',bg:['#ff4fd8','#4f7bff'],m:'👑',pat:'stars',secret:1,rainbow:1}];
 const CARD={};CARDS.forEach(c=>CARD[c.id]=c);
 const TITLES=[
 {n:'Le Débutant',c:()=>true,d:'Dès le début'},
@@ -1289,27 +1301,28 @@ const TITLES=[
 {n:'Riche à millions',c:()=>S.coins>=5000,d:'Aie 5 000 pièces'},
 {n:'Star du classé',c:()=>RKD[rkIdx(S.rk.best)].r>=3,d:'Atteins Diamant'},
 {n:'La Légende',c:()=>RKD[rkIdx(S.rk.best)].r>=5,d:'Atteins Légendaire'},
-{n:'Le Pro',c:()=>RKD[rkIdx(S.rk.best)].r>=7,d:'Atteins Pro'}];
+{n:'Le Pro',c:()=>RKD[rkIdx(S.rk.best)].r>=7,d:'Atteins Pro'},
+{n:'✨ Le Créateur ✨',c:()=>!!S.creator,d:'Réservé au créateur',secret:1}];
 const EMOTES=[{e:'👍',free:1},{e:'😂',free:1},{e:'😡',free:1},{e:'😢',free:1},{e:'GG',gems:10},{e:'😎',gems:15},{e:'🔥',gems:15},{e:'🤯',gems:20},{e:'😴',gems:20},{e:'❤️',gems:20},{e:'🤡',gems:25},{e:'👑',gems:30}];
 function ensureProf(){if(!S.prof)S.prof={card:'c_ciel',title:'Le Débutant',cards:['c_ciel'],emotes:['👍','😂','😡','😢']};const r=RKD[rkIdx(S.rk.best)].r;CARDS.forEach(c=>{if(c.rank!=null&&r>=c.rank&&!S.prof.cards.includes(c.id))S.prof.cards.push(c.id)})}
 function pcard(o){const C=CARD[o.card]||CARDS[0];const h=HERO[o.hid];
- return`<div class="pc ${o.me?'me':''}" style="--a:${C.bg[0]};--b:${C.bg[1]};--tilt:${o.tilt||0}deg;--tc:${o.tc||'transparent'};${o.delay!=null?`animation-delay:${o.delay}s`:''}">
+ return`<div class="pc ${o.me?'me':''} ${C.rainbow?'rainbow':''}" style="--a:${C.bg[0]};--b:${C.bg[1]};--tilt:${o.tilt||0}deg;--tc:${o.tc||'transparent'};${o.delay!=null?`animation-delay:${o.delay}s`:''}">
  <div class="pcin"><div class="pcbg pat-${C.pat}"></div><div class="pcm">${C.m}</div><img class="pch" src="${portrait(o.hid,o.skin,300)}"></div>
  <div class="pcbadge">${rkBadge(o.rkp||0,40)}</div>
  <div class="pcf"><div class="pct"><b>${esc(o.name)}</b><i>${esc(o.title||'')}</i></div><span class="pci" style="background:${RAR[h.rar].c}"><img src="${portrait(o.hid,o.skin,96)}"></span></div></div>`}
 function renderProfile(){
  ensureProf();const P=S.prof,hs=S.heroes[S.sel];const rr_=RKD[rkIdx(S.rk.best)].r;
- const cards=CARDS.map(c=>{const own=P.cards.includes(c.id);const lock=c.rank!=null&&!own;
+ const cards=CARDS.filter(c=>!c.secret||P.cards.includes(c.id)).map(c=>{const own=P.cards.includes(c.id);const lock=c.rank!=null&&!own;
   const btn=P.card===c.id?'<span class="chip" style="background:#2fbf3a">✔ Équipée</span>':own?`<button class="btn small green" data-act="setcard" data-arg="${c.id}">Équiper</button>`:lock?`<span class="chip">🔒 Rang ${RKN[c.rank][0]}</span>`:`<button class="btn small purple" data-act="setcard" data-arg="${c.id}">💎 ${c.gems}</button>`;
   return`<div class="pcw">${pcard({card:c.id,hid:S.sel,skin:hs.skin,name:c.n,title:'',rkp:S.rk.pts})}${btn}</div>`}).join('');
- const titles=TITLES.map(t=>{const ok=t.c();return`<button class="ttl ${P.title===t.n?'on':''} ${ok?'':'lk'}" data-act="settitle" data-arg="${esc(t.n)}"><b>${t.n}</b><small>${ok?(P.title===t.n?'✔ Équipé':'Toucher pour équiper'):'🔒 '+t.d}</small></button>`}).join('');
+ const titles=TITLES.filter(t=>!t.secret||t.c()).map(t=>{const ok=t.c();return`<button class="ttl ${P.title===t.n?'on':''} ${ok?'':'lk'}" data-act="settitle" data-arg="${esc(t.n)}"><b>${t.n}</b><small>${ok?(P.title===t.n?'✔ Équipé':'Toucher pour équiper'):'🔒 '+t.d}</small></button>`}).join('');
  const emos=EMOTES.map(m=>{const own=P.emotes.includes(m.e);return`<div class="emw ${own?'':'lk'}"><div class="emi">${emoHtml(S.sel,hs.skin,m.e,84)}</div>${own?'<small>✔ À toi</small>':`<button class="btn small purple" data-act="buyemote" data-arg="${m.e}">💎 ${m.gems}</button>`}</div>`}).join('');
- $('#s-profile').innerHTML=`<div class="hdr">${back()}<h1 class="out">Mon profil</h1>${money()}</div><div class="content">
+ $('#s-profile').innerHTML=`<div class="hdr">${back()}<h1 class="out">Mon profil</h1><button class="btn small purple" data-act="secret">🔑 Code secret</button>${money()}</div><div class="content">
  <div class="profTop">${pcard({card:P.card,hid:S.sel,skin:hs.skin,name:S.name,title:P.title,rkp:S.rk.pts,me:1,tilt:-2})}
  <div class="profSt"><div class="out" style="font-size:30px">${esc(S.name)} <button class="btn small blue" data-act="rename">✏️ Pseudo</button></div>
  <div class="rbx"><span>🏆 Trophées</span><b>${fmt(totalTr())}</b></div><div class="rbx"><span>🏅 Meilleur rang</span><b>${rkName(S.rk.best)}</b></div>
  <div class="rbx"><span>⚔️ Victoires</span><b>${S.stats.wins}</b></div><div class="rbx"><span>☠️ Éliminations</span><b>${S.stats.killsT||0}</b></div>
- <div class="rbx"><span>🦸 Héros</span><b>${ownedIds().length}/${HEROES.length}</b></div><div class="rbx"><span>🎮 Matchs</span><b>${S.stats.games}</b></div></div></div>
+ <div class="rbx"><span>🦸 Héros</span><b>${ownedIds().filter(i=>!HERO[i].secret).length}/${HEROES_PUB().length}</b></div><div class="rbx"><span>🎮 Matchs</span><b>${S.stats.games}</b></div></div></div>
  <div class="sec out">🖼️ Cartes de combat <small style="font-size:15px;opacity:.8">— elle apparaît avant chaque match</small></div><div class="pcgrid">${cards}</div>
  <div class="sec out">🏷️ Titres</div><div class="ttlgrid">${titles}</div>
  <div class="sec out">😎 Émotes <small style="font-size:15px;opacity:.8">— bouton 😀 en haut à gauche pendant le match</small></div><div class="emgrid">${emos}</div></div>`;
@@ -1368,11 +1381,11 @@ function showVS(){
  clearTimeout(showVS.h);let n=3;const tick=()=>{n--;const el=document.getElementById('vscd');if(n>0){if(el)el.textContent=n;sfx(600,.08,'square',.04);showVS.h=setTimeout(tick,1000)}else if(G&&screen==='vs'){show('game');sfx(500,.2,'triangle',.05,1.5)}};showVS.h=setTimeout(tick,1000);
 }
 function renderHeroes(){
- let html=`<div class="hdr">${back()}<h1 class="out">Héros ${ownedIds().length}/${HEROES.length}</h1>${money()}</div><div class="content">`;
- for(let r=5;r>=0;r--){const list=HEROES.filter(h=>h.rar===r);const own=list.filter(h=>S.heroes[h.id]).length;
+ let html=`<div class="hdr">${back()}<h1 class="out">Héros ${ownedIds().filter(i=>!HERO[i].secret).length}/${HEROES_PUB().length}</h1>${money()}</div><div class="content">`;
+ for(let r=6;r>=0;r--){const list=HEROES.filter(h=>h.rar===r&&(!h.secret||S.heroes[h.id]));if(!list.length)continue;const own=list.filter(h=>S.heroes[h.id]).length;
   html+=`<div class="rarh out" style="--rc:${RAR[r].c}">${RAR[r].n}<small>${own}/${list.length}</small></div><div class="grid">`;
   html+=list.map(h=>{const o=S.heroes[h.id];const up=o&&o.lvl<MAXLVL&&o.pp>=PP_NEED[o.lvl];
-   return`<div class="hcard ${o?'':'locked'} ${S.sel===h.id?'sel':''}" style="--rc:${RAR[h.rar].c}" data-act="go" data-arg="hero" data-arg2="${h.id}">
+   return`<div class="hcard rar${h.rar} ${o?'':'locked'} ${S.sel===h.id?'sel':''}" style="--rc:${RAR[h.rar].c}" data-act="go" data-arg="hero" data-arg2="${h.id}">
    <span class="tag">${h.role}</span>${up?'<span class="badge">⬆</span>':''}
    <img src="${portrait(h.id,o?o.skin:'',236)}" alt=""><div class="n">${h.name}</div>
    <div class="s">${o?`<span>NIV ${o.lvl}</span><span>🏆 ${o.tr}</span>`:'<span>🔒 Verrouillé</span>'}</div></div>`}).join('')+'</div>';}
@@ -1396,8 +1409,8 @@ function renderHero(hid){
   <div style="display:flex;gap:10px;flex-wrap:wrap">${max?'':`<button class="btn purple" data-act="up" data-arg="${hid}">⬆ AMÉLIORER</button>`}
   ${S.sel===hid?'<button class="btn grey">✔ CHOISI</button>':`<button class="btn green" data-act="choose" data-arg="${hid}">CHOISIR</button>`}</div>`;
  }else{
-  const price=RAR_PRICE[h.rar];
-  act=`<div class="abil">🔒 Débloque ce héros dans les coffres, la route des trophées, le pass, ou achète-le :</div><button class="btn" data-act="buyhero" data-arg="${hid}">ACHETER · 💰 ${fmt(price)}</button>`;
+  if(h.secret){act='<div class="abil">🔑 Héros exclusif du créateur.</div>'}else{const price=RAR_PRICE[h.rar];
+  act=`<div class="abil">🔒 Débloque ce héros dans les coffres, la route des trophées, le pass, ou achète-le :</div><button class="btn" data-act="buyhero" data-arg="${hid}">ACHETER · 💰 ${fmt(price)}</button>`;}
  }
  const skins=SKINS.filter(s=>s.hero===hid);
  const sk=o?`<div class="sec out" style="font-size:20px;margin:12px 0 4px">Skins</div><div class="skins">
@@ -1437,7 +1450,7 @@ function renderShop(){
  h+=`<div class="sec out">📦 Coffres</div><div class="shop">`;
  [{id:'b1',t:'Petit coffre',d:'Pièces, force, chance de héros',ic:'📦',r:{box:'petit'},price:{coins:100}},{id:'b2',t:'Grand coffre',d:'3× plus de surprises',ic:'📦',r:{box:'grand'},price:{gems:30}},{id:'b3',t:'Méga coffre',d:'Le plus gros coffre !',ic:'🎁',r:{box:'mega'},price:{gems:80}},{id:'gx',t:'Échange',d:'Transforme tes pièces en gemmes',ic:'💎',r:{gems:10},price:{coins:400}}].forEach(o=>{const i=add(o);h+=card(o,i)});
  h+='</div>';
- const lockedH=HEROES.filter(x=>!S.heroes[x.id]);
+ const lockedH=HEROES_PUB().filter(x=>!S.heroes[x.id]);
  if(lockedH.length){h+=`<div class="sec out">🦸 Héros</div><div class="shop">`;lockedH.forEach(x=>{const o={id:'h_'+x.id,t:x.name,d:RAR[x.rar].n+' · '+x.role,ic:'hero:'+x.id,r:{hero:x.id},price:{coins:RAR_PRICE[x.rar]}};const i=add(o);h+=card(o,i,'pink')});h+='</div>'}
  h+=`<div class="sec out">🎨 Skins</div><div class="shop">`;
  SKINS.filter(s=>!s.pass).forEach(s=>{const own=S.skins.includes(s.id);if(own){h+=`<div class="offer done"><div class="ic">${icHtml('skin:'+s.id,86)}</div><div class="t">${s.name}</div><div class="d">Possédé</div><button class="btn grey small">✔</button></div>`;return}const o={id:'s_'+s.id,t:s.name,d:S.heroes[s.hero]?'Skin pour '+HERO[s.hero].name:'⚠️ Héros pas encore débloqué',ic:'skin:'+s.id,r:{skin:s.id},price:{gems:s.gems}};const i=add(o);h+=card(o,i)});
@@ -1500,6 +1513,12 @@ const ACTIONS={
  up:(h)=>{const o=S.heroes[h];if(!o||o.lvl>=MAXLVL)return;const p=PP_NEED[o.lvl],c=COIN_NEED[o.lvl];if(o.pp<p){toast('Il te manque '+(p-o.pp)+' ⚡ points de force (coffres, pass, boutique)');return}if(S.coins<c){toast('Il te manque '+(c-S.coins)+' 💰 pièces');return}o.pp-=p;S.coins-=c;o.lvl++;save();sfx(400,.3,'triangle',.06,2.5);toast('⬆ '+HERO[h].name+' passe niveau '+o.lvl+' !');renderHero(h)},
  buyhero:(h)=>{const p=RAR_PRICE[HERO[h].rar];if(S.coins<p){toast('Il te manque '+fmt(p-S.coins)+' 💰');return}S.coins-=p;const l=grant({hero:h});save();showRewards(l,null,'Nouveau héros !')},
  skin:(h,el)=>{const id=el.dataset.arg2;const o=S.heroes[h];if(!o)return;if(id&&!S.skins.includes(id)){const s=SKIN[id];if(s.pass){toast('🎟️ Ce skin est dans le Pass premium');return}if(S.gems<s.gems){toast('Il te manque '+(s.gems-S.gems)+' 💎');return}S.gems-=s.gems;S.skins.push(id);sfx(700,.2,'triangle',.05,1.5);toast('🎨 Skin débloqué !')}o.skin=id;save();renderHero(h)},
+ secret:()=>{const c=prompt('Code secret du créateur :');if(!c)return;if(hashStr(c.trim().toUpperCase())!==1347351506){toast('❌ Code incorrect');return}
+  if(S.creator){toast('✨ Tu as déjà les bonus du créateur !');return}S.creator=true;ensureProf();const l=[];
+  S.coins+=1000000;S.gems+=1000000;l.push({ic:'💰',t:'+1 000 000 pièces'},{ic:'💎',t:'+1 000 000 gemmes'});
+  if(!S.heroes.prisma)S.heroes.prisma={lvl:1,pp:0,tr:0,skin:''};for(const h in S.heroes)S.heroes[h].pp+=1000000;l.push({ic:'⚡',t:'+1 000 000 éclairs',sub:'pour chaque héros'});
+  l.push({ic:'hero:prisma',t:'HÉROS EXCLUSIF !',sub:'Prisma · Créateur',big:1});if(!S.prof.cards.includes('c_createur'))S.prof.cards.push('c_createur');S.prof.card='c_createur';S.prof.title='✨ Le Créateur ✨';l.push({ic:'👑',t:'Carte « Créateur »',sub:'+ titre ✨ Le Créateur ✨',big:1});
+  S.sel='prisma';save();sfx(500,.5,'triangle',.07,2.5);showRewards(l,null,'👑 Bienvenue, Créateur !')},
  setcard:(id)=>{ensureProf();const c=CARD[id];if(!c)return;if(!S.prof.cards.includes(id)){if(c.rank!=null){toast('🔒 Atteins le rang '+RKN[c.rank][0]+' en Classé');return}if(S.gems<c.gems){toast('Il te manque '+(c.gems-S.gems)+' 💎');return}S.gems-=c.gems;S.prof.cards.push(id);sfx(700,.2,'triangle',.05,1.5);toast('🖼️ Carte débloquée !')}S.prof.card=id;save();renderProfile()},
  settitle:(n)=>{ensureProf();const t=TITLES.find(x=>x.n===n);if(!t)return;if(!t.c()){toast('🔒 '+t.d);return}S.prof.title=n;save();renderProfile()},
  buyemote:(e)=>{ensureProf();const m=EMOTES.find(x=>x.e===e);if(!m||S.prof.emotes.includes(e))return;if(S.gems<m.gems){toast('Il te manque '+(m.gems-S.gems)+' 💎');return}S.gems-=m.gems;S.prof.emotes.push(e);save();sfx(800,.2,'triangle',.05,1.5);toast('😎 Émote débloquée !');renderProfile()},
@@ -1640,7 +1659,7 @@ function startMatch(opts){
  const skill=ranked?clamp(.28+ri*.03,.28,.88):clamp(.2+me.tr/1100,.2,.72);BOTPOW=ranked?clamp(ri/12,0,.95):clamp(me.tr/500,0,.8);const EDMG=ranked?clamp(.8+ri*.012,.8,1.03):clamp(.7+me.tr/1200,.7,1);const MYEQ={gad:!!me.gad,tal:!!me.tal,hyp:!!me.hyp};
  const lv=()=>clamp(me.lvl+(ranked?rndi(-1,0)+(ri>=12?1:0):rndi(-2,0)),1,MAXLVL);
  const names=BOTNAMES.slice().sort(()=>Math.random()-.5);
- const pool=HEROES.map(h=>h.id);
+ const pool=HEROES_PUB().map(h=>h.id);
  if(mode==='sd'){
   G.units.push(mkB(hid,0,G.sp[0].x,G.sp[0].y,me.lvl,true,me.skin,S.name,1,MYEQ));
   for(let i=1;i<8;i++)G.units.push(mkB(pick(pool),i,G.sp[i].x,G.sp[i].y,lv(),false,'',names[i],skill));
@@ -1652,7 +1671,7 @@ function startMatch(opts){
  }
  G.player=G.units.find(u=>u.isPlayer);
  G.ranked=ranked;ensureProf();
- for(const u of G.units)if(u.type==='brawler'){if(u.isPlayer){u.card=S.prof.card;u.title=S.prof.title}else{u.card=pick(CARDS).id;u.title=pick(TITLES).n}}
+ for(const u of G.units)if(u.type==='brawler'){if(u.isPlayer){u.card=S.prof.card;u.title=S.prof.title}else{u.card=pick(CARDS.filter(c=>!c.secret)).id;u.title=pick(TITLES.filter(t=>!t.secret)).n}}
  for(const u of G.units){if(u.team!==G.player.team)u.dmgMul*=EDMG;if(u.isPlayer){u.tr=me.tr;u.rkp=S.rk.pts}else{u.tr=Math.max(0,me.tr+rndi(-30,40));u.rkp=clamp(S.rk.pts+rndi(-120,120),0,2600)}}
  if(mode==='gem'){G.mineT=4;G.cdTeam=-1;G.cd=15}
  if(mode==='ball')G.ball={x:G.W*T/2,y:G.H*T/2,vx:0,vy:0,c:null,np:0,npo:null,wb:0,last:null};
