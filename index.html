@@ -2087,6 +2087,8 @@ function hud(c){
   const x=cw-safeR-s*.17,y=ch-s*.12,r=s*.06;c.fillStyle=p.charge>=1?'rgba(255,215,40,.85)':'rgba(40,40,60,.6)';c.beginPath();c.arc(x,y,r,0,TAU);c.fill();c.strokeStyle='#ffd21f';c.lineWidth=5;c.beginPath();c.arc(x,y,r,-PI/2,-PI/2+TAU*p.charge);c.stroke();txt(c,'⭐',x,y,r*.8);txt(c,'ESPACE / clic droit',x,y+r+s*.03,s*.026,'#fff');powBtns(c,g,p);
   if(G.t<9)txt(c,'ZQSD / WASD / flèches = bouger · clic = tirer · Échap = pause',cw/2,ch-s*.05,s*.03,'#fff');
  }
+ if(isTouch&&S.stats.games<3&&G.t<14&&G.startT<=0){const g=geom();const al=.75+.25*Math.sin(G.t*5);c.globalAlpha=al;const tip=(x,y,t)=>{c.font=`900 ${s*.034}px ${FONT}`;const w=c.measureText(t).width+s*.04;c.fillStyle='rgba(0,0,0,.65)';rr(c,x-w/2,y-s*.03,w,s*.06,s*.02);c.fill();txt(c,t,x,y,s*.034,'#ffe45a')};
+  tip(safeL+s*.25,ch-s*.47,'👆 Glisse ici pour bouger');tip(g.atk.x-s*.05,g.atk.y-g.atk.r-s*.06,'Touche pour tirer 🎯');tip(g.sup.x-s*.14,g.sup.y-g.sup.r-s*.06,'⭐ Super quand c\'est jaune');c.globalAlpha=1}
  if(!p.alive&&G.mode!=='sd'&&!G.over)txt(c,'Réapparition dans '+Math.ceil(p.respawn)+'…',cw/2,ch/2,fs*1.1,'#fff');
  if(G.goalPause>0)txt(c,'Prochaine manche…',cw/2,ch*.65,fs*.7,'#fff');
  if(G.banner){const b=G.banner;const k=Math.min(1,b.t*6);const sc=k<1?.5+k*.7:1.2-Math.min(.2,(b.t-.17)*.4);c.save();c.translate(cw/2,ch*.4);c.scale(sc,sc);txt(c,b.txt,0,0,s*.12,b.col);c.restore();
