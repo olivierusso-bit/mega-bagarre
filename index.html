@@ -1333,7 +1333,7 @@ function renderProfile(){
   return`<div class="pcw">${pcard({card:c.id,hid:S.sel,skin:hs.skin,name:c.n,title:'',rkp:S.rk.pts})}${btn}</div>`}).join('');
  const titles=TITLES.filter(t=>!t.secret||t.c()).map(t=>{const ok=t.c();return`<button class="ttl ${P.title===t.n?'on':''} ${ok?'':'lk'}" data-act="settitle" data-arg="${esc(t.n)}"><b>${t.n}</b><small>${ok?(P.title===t.n?'✔ Équipé':'Toucher pour équiper'):'🔒 '+t.d}</small></button>`}).join('');
  const emos=EMOTES.map(m=>{const own=P.emotes.includes(m.e);return`<div class="emw ${own?'':'lk'}"><div class="emi">${emoHtml(S.sel,hs.skin,m.e,84)}</div>${own?'<small>✔ À toi</small>':`<button class="btn small purple" data-act="buyemote" data-arg="${m.e}">💎 ${m.gems}</button>`}</div>`}).join('');
- $('#s-profile').innerHTML=`<div class="hdr">${back()}<h1 class="out">Mon profil</h1><button class="btn small purple" data-act="secret">🔑 Code secret</button>${money()}</div><div class="content">
+ $('#s-profile').innerHTML=`<div class="hdr">${back()}<h1 class="out">Mon profil</h1>${money()}</div><div class="content">
  <div class="profTop">${pcard({card:P.card,hid:S.sel,skin:hs.skin,name:S.name,title:P.title,rkp:S.rk.pts,me:1,tilt:-2,fame:fameIdx()})}
  <div class="profSt"><div class="out" style="font-size:30px">${esc(S.name)} <button class="btn small blue" data-act="rename">✏️ Pseudo</button></div>
  <div class="rbx"><span>🏆 Trophées</span><b>${fmt(totalTr())}</b></div><div class="rbx"><span>🏅 Meilleur rang</span><b>${rkName(S.rk.best)}</b></div>
@@ -1529,7 +1529,7 @@ const ACTIONS={
  up:(h)=>{const o=S.heroes[h];if(!o||o.lvl>=MAXLVL)return;const p=PP_NEED[o.lvl],c=COIN_NEED[o.lvl];if(o.pp<p){toast('Il te manque '+(p-o.pp)+' ⚡ points de force (coffres, pass, boutique)');return}if(S.coins<c){toast('Il te manque '+(c-S.coins)+' 💰 pièces');return}o.pp-=p;S.coins-=c;o.lvl++;save();sfx(400,.3,'triangle',.06,2.5);toast('⬆ '+HERO[h].name+' passe niveau '+o.lvl+' !');renderHero(h)},
  buyhero:(h)=>{const p=RAR_PRICE[HERO[h].rar];if(S.coins<p){toast('Il te manque '+fmt(p-S.coins)+' 💰');return}S.coins-=p;const l=grant({hero:h});save();showRewards(l,null,'Nouveau héros !')},
  skin:(h,el)=>{const id=el.dataset.arg2;const o=S.heroes[h];if(!o)return;if(id&&!S.skins.includes(id)){const s=SKIN[id];if(s.pass){toast('🎟️ Ce skin est dans le Pass premium');return}if(S.gems<s.gems){toast('Il te manque '+(s.gems-S.gems)+' 💎');return}S.gems-=s.gems;S.skins.push(id);sfx(700,.2,'triangle',.05,1.5);toast('🎨 Skin débloqué !')}o.skin=id;save();renderHero(h)},
- secret:()=>{const c=prompt('Code secret du créateur :');if(!c)return;if(hashStr(c.trim().toUpperCase())!==1347351506){toast('❌ Code incorrect');return}
+ secret:()=>{const c=prompt('Code secret du créateur :');if(!c)return;{toast('❌ Code incorrect');return}
   if(S.creator){toast('✨ Tu as déjà les bonus du créateur !');return}S.creator=true;ensureProf();const l=[];
   S.coins+=1000000;S.gems+=1000000;l.push({ic:'💰',t:'+1 000 000 pièces'},{ic:'💎',t:'+1 000 000 gemmes'});
   if(!S.heroes.prisma)S.heroes.prisma={lvl:1,pp:0,tr:0,skin:''};for(const h in S.heroes)S.heroes[h].pp+=1000000;l.push({ic:'⚡',t:'+1 000 000 éclairs',sub:'pour chaque héros'});
